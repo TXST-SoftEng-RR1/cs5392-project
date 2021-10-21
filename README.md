@@ -33,9 +33,12 @@ Ensure the project is running.
 Navigate to: http://localhost:8080/swagger-ui.html
 
 ## Deploy the service to GCP
+Note: cannot push image to root level. 
 
-Build Docker image: `gcloud builds submit --tag gcr.io/library-321820/library`   
-Deploy the image: `gcloud beta run deploy --image gcr.io/library-321820/library`    
+Build Docker image: `gcloud builds submit --tag gcr.io/ctl-checker/ctl-checker`   
+- First time around, may receive prompt to enable cloudbuilds for the project
+Deploy the image: `gcloud beta run deploy --image gcr.io/ctl-checker/ctl-checker`    
+- First time around, may receive prompt to enable run for the project
   - Select [1] Cloud Run (fully managed) for the target platform
   - Select [22] us-central1 for the region
   - Press Enter to select the default for service name (movies)
