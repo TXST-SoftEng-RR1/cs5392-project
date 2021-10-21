@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>edu.txstate</groupId>
+    <artifactId>ctl-checker</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>ctl-checker</name>
+    <description>A CTL checker website for the CS5392 class.</description>
+
+    <properties>
+        <java.version>11</java.version>
+        <junit.jupiter.version>5.7.2</junit.jupiter.version>
+        <junit.platform.version>1.7.2</junit.platform.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- https://stackoverflow.com/questions/59900637/error-testengine-with-id-junit-vintage-failed-to-discover-tests-with-spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Swagger for API documentation -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>5.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+        <!-- https://github.com/google/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+
+        <!-- javax.mail for SMTP -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.5.0-b01</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
+        </dependency>
+
+        <!-- JUnit5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.junit.vintage</groupId>-->
+<!--            <artifactId>junit-vintage-engine</artifactId>-->
+<!--            <version>${junit.jupiter.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                        <version>5.7.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

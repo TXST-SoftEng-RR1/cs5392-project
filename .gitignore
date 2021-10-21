@@ -1,3 +1,7 @@
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
 # Compiled class file
 *.class
 
@@ -11,6 +15,7 @@
 .mtj.tmp/
 
 # Package Files #
+target/**
 *.jar
 *.war
 *.nar
@@ -21,3 +26,50 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#IDEs
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# eclipse specific
+*.pydevproject
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### Maven ###
+.mvn
+mvnw
+mvnw.cmd
+
+### Firebase ###
+.firebase
+# sbteclipse plugin
+.target
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
