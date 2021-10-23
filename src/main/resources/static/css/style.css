@@ -2,6 +2,11 @@ body {
     background-color: #501214 !important;
 }
 
+textarea {
+    width: 100%;
+    height: 150px;
+}
+
 .badge {
     background-color: #27629a;
 }
@@ -9,7 +14,6 @@ body {
 .textColor {
     color: white;
 }
-
 
 #watermark
 {
@@ -25,4 +29,8 @@ body {
     bottom: 0;
     width: 100%;
     height: 60px;
+}
+
+.badge {
+    margin-left: 10px;
 }

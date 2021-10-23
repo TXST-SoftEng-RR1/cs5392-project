@@ -1,12 +1,24 @@
 # CTL Checker Application (CS5392) 
 
 Authors: Borislav Sabotinov, Sivaranjani Ravichandran, Sneha Sirnam, Sriram Putta
+Source Code: https://github.com/TXST-SoftEng-RR1/cs5392-project
+Website: https://ctl-checker-pprkprkh4a-uc.a.run.app/
 
 ## Pre-requisites and Dependencies
 
 Apache Maven: https://maven.apache.org/     
 Node.js and NPM: https://nodejs.org/en/
+JavCC: https://javacc.github.io/javacc/
 
+## Compile JJTree and JavaCC files for the CTL Parser
+
+JJTree is a preprocessor included with JavaCC. 
+The output of the jjt file must be ran through JavaCC to create the parser. 
+JJTree constructs the parse tree from the bottom up. 
+JavaCC, on the other hand, is a top-down parser. 
+
+1. `jjtree CTLParser.jjt`
+2. `javacc CTLParser.jj`
 
 ## Build the app
 
@@ -53,6 +65,8 @@ The following guides illustrate how to use some features concretely:
 [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)    
 [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)    
 [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)    
+[JJTree Reference](https://www.cs.purdue.edu/homes/hosking/javacc/doc/JJTree.html)
+[JavaCC Reference](https://javacc.github.io/javacc/tutorials/examples.html#javacc-instructions)
 
 ## Notes
 

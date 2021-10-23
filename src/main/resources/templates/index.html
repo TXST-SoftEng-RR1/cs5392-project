@@ -2,6 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Borislav S. Sabotinov">
+    <meta name="description" content="This site allows users to define a Kripke model and see if a given
+            Computational Tree Logic (CTL) formula holds for a given state. It uses JavaCC to create a CTL parser.">
+
     <title>CTL Checker (CS5392)</title>
 
     <link rel="icon" type="image/png" sizes="64x64" href="img/favicon.png">
@@ -14,7 +18,7 @@
     <script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.js}" type="application/javascript"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js" type="application/javascript"></script>
     <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js" type="application/javascript"></script>
-    <script src="js/library.js" type="application/javascript" defer></script>
+    <script src="js/ctlchecker.js" type="application/javascript" defer></script>
 
 </head>
 <body>
@@ -28,6 +32,10 @@
 
     <div class="alert alert-secondary" role="alert" style="border-radius: 0;">
         Main screen for validation and processing of CTL formulae.
+        <br/>
+        <div style="font-size: small;">
+            Right-click -> Inspect -> Console for more details.
+        </div>
     </div>
 
     <hr/>
@@ -36,8 +44,11 @@
         Swagger UI
     </a>
     <a href="https://github.com/TXST-SoftEng-RR1/cs5392-project" target="_blank" class="badge badge-pill badge-info">
-        Documentation
+        Source Code
     </a>
+    <button class="badge badge-pill badge-info" data-bs-toggle="modal" data-bs-target="#usageInstructionsModal">
+        Usage Instructions
+    </button>
 
 
     <div class="container">
@@ -47,8 +58,11 @@
         <br/>
         <div class="row">
             <div class="col-sm">
-                <label for="ctlModelFile" class="textColor">Load Model: &nbsp; </label>
+                <label for="ctlModelFile" class="textColor">Load JSON Model: &nbsp; </label>
                 <input id="ctlModelFile" type="file" class="textColor">
+                <hr style="color: lightgray"/>
+                <label for="content-target" class="textColor">Raw Model Definition: </label>
+                <textarea id="content-target" style="margin-top: 10px;"></textarea>
             </div>
             <div class="col-sm">
 
@@ -57,11 +71,48 @@
     </div>
 
     <br/>
+
     <img src="img/texas-state-bobcats-logo.png" id="watermark">
     <footer id="ftr" class="py-4 bg-dark flex-shrink-0">
         <div class="container text-center">
             <a href="https://www.txstate.edu/" class="text-white-50">&copy; 2021 Texas State University</a>
         </div>
     </footer>
+
+    <!-- Invalid File Modal -->
+    <div class="modal fade" id="invalidModelModal" tabindex="-1" role="dialog" aria-labelledby="invalidModelModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title" id="invalidModelModalTitle">Invalid File Upload: </h5>
+                    <button id="closeInvalidModelModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    A Kripke structure should be defined in a .json file, using the data format show in the instructions.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usage Instructions Modal -->
+    <div class="modal fade" id="usageInstructionsModal" tabindex="-1" role="dialog" aria-labelledby="usageInstructionsModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title" id="usageInstructionsModalTitle">How to use this program: </h5>
+                    <button id="closeUsageInstructionsModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The Kripke model should be defined using JSON format. Below is an example.
+                    <img src="img/KripkeJSONDefinition.png" alt="Example of a Kripke structure defined in JSON.">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

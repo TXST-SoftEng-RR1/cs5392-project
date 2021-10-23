@@ -14,23 +14,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package edu.txstate.library;
+package edu.txstate.ctl_parser.controllers;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author Borislav S. Sabotinov
- */
-@SpringBootApplication
-public class CtlCheckerApplication {
+import java.util.logging.Logger;
 
-    /**
-     * Launches SpringBoot application, which listens on port 8080
-     * {@code localhost:8080}
-     * @param args command line arguments
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(CtlCheckerApplication.class, args);
+@RestController
+public class CtlCheckerController {
+    Logger logger = Logger.getLogger(CtlCheckerController.class.getName());
+    @Value("${TARGET:World}")
+    String message;
+
+    @GetMapping("/hello")
+    String hello() {
+        return "CS5392 CTL Checker App says hello!" + message + "!";
     }
+
+
 }
