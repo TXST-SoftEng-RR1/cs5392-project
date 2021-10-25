@@ -1,8 +1,9 @@
 jQuery(document).ready(function() {
     let ctlModel = $("#ctlModelFile");
+    let modelName;
 
     ctlModel.change(function getFile(event) {
-        let modelName = ctlModel.val().replace('C:\\fakepath\\', '');
+        modelName = ctlModel.val().replace('C:\\fakepath\\', '');
         console.log("Kripke model file name: " + modelName);
 
         if (!modelName.includes(".json")) {
@@ -13,18 +14,22 @@ jQuery(document).ready(function() {
             }
         }
 
-        const input = event.target
+        const input = event.target;
         if ('files' in input && input.files.length > 0) {
-            placeFileContent(
-                document.getElementById('content-target'),
-                input.files[0])
+            placeFileContent($('#content-target'), input.files[0]);
         }
     });
 
     function placeFileContent(target, file) {
         readFileContent(file).then(content => {
-            target.value = content
-        }).catch(error => console.log(error))
+            // try to parse as JSON to force an error if it is not valid
+            let json = $.parseJSON(content);
+            console.log("updating textbox...");
+            target.val(content);
+        }).catch(error => {
+            $('#invalidModelModal').modal('toggle');
+            console.log(error);
+        })
     }
 
     function readFileContent(file) {
@@ -42,6 +47,23 @@ jQuery(document).ready(function() {
 
     $("#closeUsageInstructionsModal").click(function () {
         $("#usageInstructionsModal").modal('toggle');
+    });
+
+    $("#submitModel").click(function () {
+        $.ajax({
+            url: '/uploadModel',
+            method: 'POST',
+            type: 'POST', // for jQuery < 1.9
+            processData: false,
+            contentType: 'application/json',
+            dataType: 'json',
+            data: $('#content-target').val(),
+
+            success: function (data) {
+                console.log("It worked")
+                alert(data);
+            }
+        });
     });
 
 });

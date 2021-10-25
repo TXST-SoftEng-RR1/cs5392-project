@@ -25,8 +25,8 @@
 
             try {
                 stream = new ByteArrayInputStream(in.readLine().getBytes());
-                parser.ReInit(stream);
-                ASTCTLFormula f = parser.Formula();
+                ReInit(stream);
+                ASTCTLFormula f = Formula();
                 f.dump("");
             } catch (Exception e) {
                 System.err.println("An exception occurred!");

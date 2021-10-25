@@ -3,11 +3,10 @@ package edu.txstate.ctl_parser.model;
 import edu.txstate.ctl_parser.util.javacc_parser.CTLFormulaNode;
 
 public class KripkeStructure {
-    private String title;
     private State[] states;
 
     public KripkeStructure() {
-        title = "n/a";
+
     }
 
     private void addTransition(String s1, String s2) {
@@ -17,14 +16,6 @@ public class KripkeStructure {
         if (S1 != -1 && S2 != -1) {
             this.getState(S1).addTransition(this.getState(S2));
         }
-    }
-
-    public void clear() {
-        title = "n/a";
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String[] getStates() {

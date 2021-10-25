@@ -18,10 +18,16 @@ package edu.txstate.ctl_parser.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Logger;
 
+/**
+ * @author Borislav Sabotinov
+ * The @RestController is a combination of @ResponseBody and @Controller annotations
+ */
 @RestController
 public class CtlCheckerController {
     Logger logger = Logger.getLogger(CtlCheckerController.class.getName());
@@ -33,5 +39,10 @@ public class CtlCheckerController {
         return "CS5392 CTL Checker App says hello!" + message + "!";
     }
 
+    @PostMapping(value = "/uploadModel")
+    public String uploadModel(@RequestBody String model) {
+        System.out.println(model);
+        return "fileUploadView";
+    }
 
 }
