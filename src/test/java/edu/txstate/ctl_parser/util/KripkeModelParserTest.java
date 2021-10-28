@@ -26,7 +26,15 @@ class KripkeModelParserTest {
     }
 
     @Test
-    void loadModel() {
+    void loadModel_success_validKripkeStructure() {
         kripkeModelParser.loadModel(model);
+        assertTrue(kripkeModelParser.getKripkeStructure().toString().contains("qtr"));
+    }
+
+    @Test
+    void loadModel_fail_invalidKripkeStructure() {
+        String testStr = "Some string that is not a Kripke model";
+        kripkeModelParser.loadModel(testStr);
+        assertNull(kripkeModelParser.getKripkeStructure());
     }
 }

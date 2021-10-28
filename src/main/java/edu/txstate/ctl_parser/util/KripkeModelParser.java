@@ -26,7 +26,7 @@ public class KripkeModelParser {
 
     public KripkeModelParser() {
         kripkeJsonObj = new JsonObject();
-        kripkeStructure = new KripkeStructure();
+        kripkeStructure = null;
     }
 
     public void loadModel(String model) {
@@ -35,7 +35,6 @@ public class KripkeModelParser {
             loadStates();
             loadAtoms();
             loadTransitions();
-            logger.info("Current model: \n" + kripkeStructure.toString());
         } catch (JsonSyntaxException e) {
             logger.warning(e.getMessage());
             e.printStackTrace();
@@ -45,6 +44,8 @@ public class KripkeModelParser {
     private void loadStates() {
         JsonArray states = kripkeJsonObj.getAsJsonObject("kripke-model")
                 .getAsJsonArray("states");
+        kripkeStructure = new KripkeStructure();
+
         for (int i = 0; i < states.size(); i++) {
             State state = new State(states.get(i).getAsString());
             kripkeStructure.addState(state);
@@ -59,7 +60,6 @@ public class KripkeModelParser {
 
             for (String key : obj.keySet()) {
                 State tmpState = kripkeStructure.getState(key);
-
                 JsonArray atomsForSpecificState = obj.get(key).getAsJsonArray();
                 for (int j = 0; j < atomsForSpecificState.size(); j++) {
                     tmpState.addAtom(atomsForSpecificState.get(j).getAsString().charAt(0));
@@ -72,11 +72,20 @@ public class KripkeModelParser {
     private void loadTransitions() {
         JsonArray transitions = kripkeJsonObj.getAsJsonObject("kripke-model")
                 .getAsJsonArray("transitions");
+
         for (int i = 0; i < transitions.size(); i++) {
             String[] parts = transitions.get(i).getAsString().split(",");
             State fromState = kripkeStructure.getState(parts[FROM_STATE_IDX]);
             State toState = kripkeStructure.getState(parts[TO_STATE_IDX]);
             fromState.addTransition(toState);
         }
+    }
+
+    public KripkeStructure getKripkeStructure() {
+        return kripkeStructure;
+    }
+
+    public void setKripkeStructure(KripkeStructure kripkeStructure) {
+        this.kripkeStructure = kripkeStructure;
     }
 }
