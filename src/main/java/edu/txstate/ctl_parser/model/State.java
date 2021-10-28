@@ -1,25 +1,20 @@
 package edu.txstate.ctl_parser.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class State {
     // final member variables as we do not want to re-bind them
     // to reference another object
     private final String name;
-    private final ArrayList<String> atoms;
+    private final Set<Atom> atoms;
     private final ArrayList<State> transitions;
     private final ArrayList<String> marks;
 
-    public State() {
-        name = "n/a";
-        atoms = new ArrayList<>();
-        transitions = new ArrayList<>();
-        marks = new ArrayList<>();
-    }
-
     public State(String n) {
         name = n;
-        atoms = new ArrayList<>();
+        atoms = new HashSet<>();
         transitions = new ArrayList<>();
         marks = new ArrayList<>();
     }
@@ -28,38 +23,39 @@ public class State {
         return name;
     }
 
-    public String[] getAtoms() {
-        String[] result = new String[atoms.size()];
-        for (int i = 0; i < atoms.size(); i++) {
-            result[i] = atoms.get(i);
-        }
-        return result;
+    public Set<Atom> getAtoms() {
+        return atoms;
     }
 
     public String getAtomString() {
         StringBuilder result = new StringBuilder(15);
-
-        for (String atom : atoms) {
-            result.append(",").append(atom);
+        for (Atom atom : atoms) {
+            result.append(",").append(atom.toString());
         }
 
         return result.toString();
     }
 
-    public State[] getTransitions() {
-        State[] result = new State[transitions.size()];
-        for (int i = 0; i < transitions.size(); i++) {
-            result[i] = transitions.get(i);
-        }
-        return result;
+    public ArrayList<State> getTransitions() {
+//        State[] result = new State[transitions.size()];
+//        for (int i = 0; i < transitions.size(); i++) {
+//            result[i] = transitions.get(i);
+//        }
+//        return result;
+        return transitions;
+    }
+
+    public int getTransitionsSize() {
+        return transitions.size();
     }
 
     public void addTransition(State s) {
         transitions.add(s);
     }
 
-    public void addAtom(String atom) {
-        atoms.add(atom);
+    public void addAtom(char atomName) {
+        //atoms.add(atom);
+        atoms.add(new Atom(atomName));
     }
 
     public boolean hasAtom(String atom) {
@@ -77,5 +73,24 @@ public class State {
 
     public String toMarkings() {
         return marks.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(25);
+        stringBuilder.append("  State: ").append(this.getName());
+        stringBuilder.append("\n");
+
+        stringBuilder.append("     Atoms: ");
+        for (Atom atom : atoms)
+            stringBuilder.append(atom.toString());
+        stringBuilder.append("\n");
+
+        stringBuilder.append("     Transitions: ");
+        for (State transition : transitions)
+            stringBuilder.append(transition.getName()).append(" ");
+        stringBuilder.append("\n");
+
+        return stringBuilder.toString();
     }
 }

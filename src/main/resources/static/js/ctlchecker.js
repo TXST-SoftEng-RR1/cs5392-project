@@ -50,20 +50,28 @@ jQuery(document).ready(function() {
     });
 
     $("#submitModel").click(function () {
-        $.ajax({
-            url: '/uploadModel',
-            method: 'POST',
-            type: 'POST', // for jQuery < 1.9
-            processData: false,
-            contentType: 'application/json',
-            dataType: 'json',
-            data: $('#content-target').val(),
+            $.ajax({
+                url: '/uploadModel',
+                method: 'POST',
+                type: 'POST', // for jQuery < 1.9
+                processData: false,
+                contentType: 'application/json',
+                data: $('#content-target').val(),
+                success: handleData,
+                error: handleError
+            });
+        }
+    );
 
-            success: function (data) {
-                console.log("It worked")
-                alert(data);
-            }
-        });
-    });
+
+
+    function handleData(data , textStatus, jqXHR  ) {
+        console.log(data + textStatus);
+        //do some stuff
+    }
+
+    function handleError(data, textStatus, jqXHR) {
+        console.log(data + textStatus);
+    }
 
 });

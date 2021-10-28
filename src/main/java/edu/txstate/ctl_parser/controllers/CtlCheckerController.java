@@ -16,10 +16,12 @@
 
 package edu.txstate.ctl_parser.controllers;
 
+import edu.txstate.ctl_parser.util.KripkeModelParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Logger;
@@ -39,10 +41,22 @@ public class CtlCheckerController {
         return "CS5392 CTL Checker App says hello!" + message + "!";
     }
 
-    @PostMapping(value = "/uploadModel")
+    /**
+     * "The @ResponseBody annotation [...] can be put on a method and indicates that the
+     * return type should be written straight to the HTTP response body (and not placed in a Model,
+     * or interpreted as a view name)."
+     * http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody
+     * @param model
+     * @return
+     */
+    @PostMapping(value = "/uploadModel", produces = "text/plain")
+    @ResponseBody
     public String uploadModel(@RequestBody String model) {
-        System.out.println(model);
-        return "fileUploadView";
+        KripkeModelParser kripkeModelParser = new KripkeModelParser();
+        kripkeModelParser.loadModel(model);
+        logger.info("Model received: ");
+        logger.info(model);
+        return "Model received.";
     }
 
 }

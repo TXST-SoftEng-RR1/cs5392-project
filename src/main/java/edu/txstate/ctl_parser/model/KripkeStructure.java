@@ -2,48 +2,47 @@ package edu.txstate.ctl_parser.model;
 
 import edu.txstate.ctl_parser.util.javacc_parser.CTLFormulaNode;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 public class KripkeStructure {
-    private State[] states;
+    private HashMap<String, State> states;
 
     public KripkeStructure() {
-
+        states = new HashMap<>();
     }
 
-    private void addTransition(String s1, String s2) {
-        int S1, S2;
-        S1 = this.getStateIndex(s1);
-        S2 = this.getStateIndex(s2);
-        if (S1 != -1 && S2 != -1) {
-            this.getState(S1).addTransition(this.getState(S2));
-        }
+//    private void addTransition(String s1, String s2) {
+//
+//    }
+
+    public HashMap<String, State> getStates() {
+        return states;
     }
 
-    public String[] getStates() {
-        String[] result = new String[states.length];
-        for (int i = 0; i < states.length; i++) {
-            result[i] = states[i].getName();
-        }
-        return result;
+    public void addState(State state) {
+        states.put(state.getName(), state);
     }
 
-    public State getState(int i) {
-        return states[i];
+    public State getState(String stateName) {
+        return states.get(stateName);
     }
 
     public int getNumStates() {
-        return states.length;
+        return states.size();
     }
 
-    public int getStateIndex(String name) {
-        for (int i = 0; i < states.length; i++) {
-            if (states[i].getName().equals(name)) return i;
-        }
-        return -1;
-    }
+//    public int getStateIndex(String name) {
+//        for (int i = 0; i < states.length; i++) {
+//            if (states[i].getName().equals(name)) return i;
+//        }
+//        return -1;
+//    }
 
-    public boolean checkFormula(CTLFormulaNode formula, String state) {
+    public boolean checkFormula(CTLFormulaNode formula, String stateName) {
         mark(formula);
-        return formula.check(getState(getStateIndex(state)));
+        return formula.check(getState(stateName));
     }
 
     private void mark(CTLFormulaNode formula) {
@@ -53,9 +52,19 @@ public class KripkeStructure {
         formula.mark(this);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(100);
+        stringBuilder.append("States: \n");
+        for (State state : getStates().values())
+            stringBuilder.append(state.toString());
+
+        return stringBuilder.toString();
+    }
+
     public void printMarkings() {
-        for (State state : states) {
-            System.out.println(state.getName() + ": " + state.toMarkings());
-        }
+//        for (State state : states) {
+//            System.out.println(state.getName() + ": " + state.toMarkings());
+//        }
     }
 }

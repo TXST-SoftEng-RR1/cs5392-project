@@ -108,41 +108,41 @@ public class ASTConnective extends CTLFormulaNode {
 		switch(type)
 		{
 			case EX:
-				for(int i=0; i<model.getNumStates(); i++)
+				for(State state : model.getStates().values())
 				{
-					if(preCheckE(model.getState(i), (CTLFormulaNode)jjtGetChild(0)) && !model.getState(i).isMarked(marking))
+					if(preCheckE(state, (CTLFormulaNode)jjtGetChild(0)) && !state.isMarked(marking))
 					{
-						model.getState(i).mark(marking);
+						state.mark(marking);
 					}
 				}
 				break;
 			case EU:
-				for(int i=0; i<model.getNumStates(); i++)
+				for(State state : model.getStates().values())
 				{
-					if(((CTLFormulaNode)jjtGetChild(1)).check(model.getState(i))) model.getState(i).mark(marking);
+					if(((CTLFormulaNode)jjtGetChild(1)).check(state)) state.mark(marking);
 				}
 				changed = true;
 				while(changed)
 				{
 					changed = false;
-					for(int i=0; i<model.getNumStates(); i++)
+					for(State state : model.getStates().values())
 					{
-						if((preCheckE(model.getState(i), this) && ((CTLFormulaNode)jjtGetChild(0)).check(model.getState(i)))
-								&& !model.getState(i).isMarked(marking))
+						if((preCheckE(state, this) && ((CTLFormulaNode)jjtGetChild(0)).check(state))
+								&& !state.isMarked(marking))
 						{
-							model.getState(i).mark(marking);
+							state.mark(marking);
 							changed = true;
 						}
 					}
 				}
 				break;
 			case AF:
-				for(int i=0; i<model.getNumStates(); i++)
+				for(State state : model.getStates().values())
 				{
-					if(preCheckA(model.getState(i), (CTLFormulaNode)jjtGetChild(0)) ||
-							(model.getState(i).getTransitions().length==0 && ((CTLFormulaNode)jjtGetChild(0)).check(model.getState(i))))
+					if(preCheckA(state, (CTLFormulaNode)jjtGetChild(0)) ||
+							(state.getTransitions().size() == 0 && ((CTLFormulaNode)jjtGetChild(0)).check(state)))
 							{
-								model.getState(i).mark(marking);
+								state.mark(marking);
 							}
 				}
 
@@ -150,12 +150,12 @@ public class ASTConnective extends CTLFormulaNode {
 				while(changed)
 				{
 					changed = false;
-					for(int i=0; i<model.getNumStates(); i++)
+					for(State state : model.getStates().values())
 					{
-						if(preCheckA(model.getState(i), this) && !model.getState(i).isMarked(marking))
+						if(preCheckA(state, this) && !state.isMarked(marking))
 						{
-							System.out.println(model.getState(i).getName()+": "+preCheckA(model.getState(i), this)+", "+((CTLFormulaNode)jjtGetChild(0)).check(model.getState(i)));
-							model.getState(i).mark(marking);
+							System.out.println(state.getName()+": "+preCheckA(state, this)+", "+((CTLFormulaNode)jjtGetChild(0)).check(state));
+							state.mark(marking);
 							changed = true;
 						}
 					}
@@ -169,8 +169,8 @@ public class ASTConnective extends CTLFormulaNode {
 	
 	private boolean preCheckE(State state, CTLFormulaNode phi)
 	{
-		State[] transitions = state.getTransitions();
-		for (State transition : transitions) {
+		//ArrayList<State> transitions = state.getTransitions();
+		for (State transition : state.getTransitions()) {
 			if (phi.check(transition)) return true;
 		}
 		return false;
@@ -178,9 +178,9 @@ public class ASTConnective extends CTLFormulaNode {
 	
 	private boolean preCheckA(State state, CTLFormulaNode phi)
 	{
-		State[] transitions = state.getTransitions();
-		if(transitions.length == 0) return false;
-		for (State transition : transitions) {
+		//State[] transitions = state.getTransitions();
+		if(state.getTransitionsSize() == 0) return false;
+		for (State transition : state.getTransitions()) {
 			if (!phi.check(transition) && state != transition) return false;
 		}
 		return true;
