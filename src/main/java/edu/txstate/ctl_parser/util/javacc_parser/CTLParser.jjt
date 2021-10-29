@@ -1,0 +1,187 @@
+/**
+*  @author Borislav Sabotinov
+*
+*  From Logic in Computer Science, Modeling and Reasoning About Systems, 2nd Ed, page 208
+*  CTL as defined in Backus Naur Form (BNF)
+*  φ ::= ⊥|T| p | (¬φ) | (φ ∧ φ) | (φ ∨ φ) | (φ → φ) | AX φ | EX φ |
+*           AF φ | EF φ | AG φ | EG φ | A[φ U φ] | E[φ U φ]
+*
+* To ensure users can enter formulas using a standard English keyboard, here is the modified CTL BNF:
+*  phi ::= false|true| p | (~phi) | (phi & phi) | (phi | phi) | (phi -> phi) | AX phi | EX phi |
+*           AF phi | EF phi | AG phi | EG phi | A[phi U phi] | E[phi U phi]
+*  where p ranges over a set of atomic formulas.
+*
+* JJTree is a preprocessor for JavaCC that inserts actions into a JavaCC grammar to build parse trees for the input.
+*/
+
+options {
+    JDK_VERSION         = "11";
+    BUILD_PARSER        = true;
+    BUILD_TOKEN_MANAGER = true;
+    DEBUG_PARSER        = true;
+    ERROR_REPORTING     = true;
+    SANITY_CHECK        = true; // detect left recursion and ambiguity
+    STATIC              = true; // only one parser object may be present
+}
+
+PARSER_BEGIN(CTLParser)
+
+    package edu.txstate.ctl_parser.util.javacc_parser;
+
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+
+public class CTLParser {
+    protected static JJTeg1State jjtree = new JJTeg1State();
+
+    public static void main(String...args) throws ParseException {
+        InputStreamReader converter = new InputStreamReader(System.in);
+        BufferedReader in = new BufferedReader(converter);
+        InputStream stream = new ByteArrayInputStream(new byte[0]);
+        CTLParser parser = new CTLParser(stream);
+
+        System.out.println("Reading from standard input...");
+        System.out.println("A well formed formula (WFF) phi for Computational Tree Logic (CTL) may be in the form: ");
+        System.out.println("phi ::= false | true | p | (~phi) | (phi & phi) | (phi | phi) | (phi -> phi) | AX phi | EX phi | "
+                            + "\n AF phi | EF phi | AG phi | EG phi | A[phi U phi] | E[phi U phi]");
+        System.out.print("Enter a WFF for CTL: ");
+
+        try {
+            stream = new ByteArrayInputStream(in.readLine().getBytes());
+            parser.ReInit(stream);
+            edu.txstate.ctl_parser.util.javacc_parser.ASTCTLFormula f = parser.Formula();
+            f.dump("");
+        } catch (Exception e) {
+            System.err.println("An exception occurred!");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } catch (Error e) {
+            System.err.println("An error occurred!");
+            System.err.println(e.getMessage());
+        }
+    } // end main
+}} // end main
+} // end class
+
+PARSER_END(CTLParser)
+
+/**
+*  TOKEN MANAGER: Covers lexical states, lexical actions, and the use of special tokens.
+*  https://javacc.github.io/javacc/tutorials/token-manager.html
+*
+* SKIP - simply throw away the matched string after executing any lexical action.
+* Skip whitespace, return, tabs, and newline.
+*/
+SKIP : {
+    " "
+    | "\r"
+    | "\t"
+    | "\n"
+}
+
+/**
+* TOKEN - create a token using the matched string and send it to the parser or any caller.
+* NOT  may be represented with ~
+* AND  may be represented with &
+* OR   may be represented with |
+* THEN may be represented with ->
+*/
+TOKEN : {
+    < NOT : "~" >
+}
+
+TOKEN : {
+    < AND : "&" >
+    | < OR : "|" >
+}
+
+TOKEN : {
+    < THEN : "->" >
+}
+
+TOKEN : {
+    < ALL : "A" >
+    | < EXISTS: "E" >
+}
+
+TOKEN : {
+    < FUTURE : "F">
+    | < GLOBALLY : "G">
+    | < NEXT : "X" >
+    | < UNTIL : "U" >
+}
+
+TOKEN : {
+    < ATOM : ["a"-"z"](["a"-"z","0"-"9"])* >
+}
+
+ASTFormula Formula():
+{}
+{
+  Phi()< EOF >
+  { return jjtThis; }
+}
+
+void Phi() #void:
+{}
+{
+    Atom()
+| "(" expr() ")"
+| Connective()
+}
+void expr() #Expr:
+{Node n; int result=-1;}
+{
+  result=< NOT >.kind Phi()
+  { jjtThis.setType(result); }
+| Phi() result=exprPrime2() Phi()
+  { jjtThis.setType(result); }
+}
+int exprPrime2() #void:
+{Token t;}
+{
+  t=< AND >
+  {return t.kind;}
+| t=< OR >
+  {return t.kind;}
+| t=< THEN >
+  {return t.kind;}
+}
+void exprPrime() #void:
+{}
+{
+  < AND > Phi()
+| < OR > Phi()
+| < THEN > Phi()
+}
+void Connective() #Connective:
+{int path, temporal;}
+{
+  (
+  path=< ALL >.kind temporal=connPart2()
+| path=< EXISTS >.kind temporal=connPart2()
+  )
+  { jjtThis.setType(path, temporal); }
+}
+int connPart2() #void:
+{int kind;}
+{
+  (
+    kind=< NEXT >.kind Phi()
+| kind=< FUTURE >.kind Phi()
+| kind=< GLOBALLY >.kind Phi()
+| "[" Phi() kind=< UNTIL >.kind Phi() "]"
+  )
+  { return kind; }
+}
+
+void Atom() #Atom:
+{Token t;}
+{
+  t=< ATOM >
+  {
+	jjtThis.setName(t.image);
+  }
+}

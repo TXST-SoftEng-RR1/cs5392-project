@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package edu.txstate.library.config;
+package edu.txstate.ctl_parser.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +31,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author Borislav S. Sabotinov
  */
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
     /**
      * Returns a Docket - A builder which is intended to be the primary interface into the swagger-springmvc framework.
@@ -43,7 +42,8 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build().apiInfo(apiEndPointsInfo());
+                .build()
+                .apiInfo(apiEndPointsInfo());
     }
 
     /**
