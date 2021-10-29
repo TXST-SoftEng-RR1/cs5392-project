@@ -91,3 +91,4 @@ This exception occurs if you do not make the Logger object private static and fi
 
 https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson
 
+Some change
