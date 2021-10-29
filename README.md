@@ -10,6 +10,17 @@ Apache Maven: https://maven.apache.org/
 Node.js and NPM: https://nodejs.org/en/
 JavCC: https://javacc.github.io/javacc/
 
+## Working with Git
+
+1. Work off of a short-lived branch, acceptable names: 
+- `feature/<name-of-feature>`
+- `bugfix/<name>`
+2. Pull before you push
+- from your feature branch: 
+`git pull origin development`
+3. To check status: `git status`
+4. To check branch: `git branch`
+
 ## Compile JJTree and JavaCC files for the CTL Parser
 
 JJTree is a preprocessor included with JavaCC. 
@@ -42,7 +53,7 @@ You should see "CS5392 CTL Checker App says hello!World!"
 To view the available API endpoints and details about them:
 
 Ensure the project is running.    
-Navigate to: http://localhost:8080/swagger-ui.html
+Navigate to: http://localhost:8080/swagger-ui/index.html
 
 ## Deploy the service to GCP
 Note: cannot push image to root level. 
