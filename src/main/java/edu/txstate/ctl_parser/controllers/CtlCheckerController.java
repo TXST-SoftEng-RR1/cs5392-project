@@ -14,19 +14,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package edu.txstate.library.controllers;
+package edu.txstate.ctl_parser.controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import edu.txstate.ctl_parser.util.KripkeModelParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * @author Borislav Sabotinov
+ * The @RestController is a combination of @ResponseBody and @Controller annotations
+ */
 @RestController
 public class CtlCheckerController {
     Logger logger = Logger.getLogger(CtlCheckerController.class.getName());
@@ -38,5 +41,22 @@ public class CtlCheckerController {
         return "CS5392 CTL Checker App says hello!" + message + "!";
     }
 
+    /**
+     * "The @ResponseBody annotation [...] can be put on a method and indicates that the
+     * return type should be written straight to the HTTP response body (and not placed in a Model,
+     * or interpreted as a view name)."
+     * http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody
+     * @param model
+     * @return
+     */
+    @PostMapping(value = "/uploadModel", produces = "text/plain")
+    @ResponseBody
+    public String uploadModel(@RequestBody String model) {
+        KripkeModelParser kripkeModelParser = new KripkeModelParser();
+        kripkeModelParser.loadModel(model);
+        logger.info("Model received: ");
+        logger.info(model);
+        return "Model received.";
+    }
 
 }

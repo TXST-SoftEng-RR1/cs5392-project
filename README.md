@@ -1,14 +1,40 @@
 # CTL Checker Application (CS5392) 
 
-Authors: Borislav Sabotinov, Sivaranjani Ravichandran, Sneha Sirnam, Sriram Putta
+Authors: Borislav Sabotinov, Sivaranjani Ravichandran, Sneha Sirnam, Sriram Putta    
+- Source Code: https://github.com/TXST-SoftEng-RR1/cs5392-project
+- Website: https://ctl-checker-pprkprkh4a-uc.a.run.app/
 
 ## Pre-requisites and Dependencies
 
-Apache Maven: https://maven.apache.org/     
-Node.js and NPM: https://nodejs.org/en/
+- Apache Maven: https://maven.apache.org/     
+- Node.js and NPM: https://nodejs.org/en/    
+- JavCC: https://javacc.github.io/javacc/
 
+## Working with Git
+
+1. Work off of a short-lived branch, acceptable names: 
+- `feature/<name-of-feature>`
+- `bugfix/<name>`
+2. Pull before you push
+- from your feature branch: 
+`git pull origin development`
+3. To check status: `git status`
+4. To check branch: `git branch`
+
+## Compile JJTree and JavaCC files for the CTL Parser
+
+JJTree is a preprocessor included with JavaCC. 
+The output of the jjt file must be ran through JavaCC to create the parser. 
+JJTree constructs the parse tree from the bottom up. 
+JavaCC, on the other hand, is a top-down parser. 
+
+1. `jjtree CTLParser.jjt`
+2. `javacc CTLParser.jj`
 
 ## Build the app
+
+To view dependency tree: 
+`mvn dependency:tree`
 
 To build the application manually: 
 `mvn clean package`    
@@ -26,11 +52,11 @@ After building the app
 
 You should see "CS5392 CTL Checker App says hello!World!"
 
-## Viewing the API
+## Viewing the API documentation
 To view the available API endpoints and details about them:
 
 Ensure the project is running.    
-Navigate to: http://localhost:8080/swagger-ui.html
+Navigate to: http://localhost:8080/swagger-ui/index.html
 
 ## Deploy the service to GCP
 Note: cannot push image to root level. 
@@ -53,6 +79,8 @@ The following guides illustrate how to use some features concretely:
 [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)    
 [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)    
 [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)    
+[JJTree Reference](https://www.cs.purdue.edu/homes/hosking/javacc/doc/JJTree.html)
+[JavaCC Reference](https://javacc.github.io/javacc/tutorials/examples.html#javacc-instructions)
 
 ## Notes
 
@@ -62,5 +90,3 @@ This exception occurs if you do not make the Logger object private static and fi
 ##References
 
 https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson
-
-Some change test
