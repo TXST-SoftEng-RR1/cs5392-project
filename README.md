@@ -1,14 +1,14 @@
 # CTL Checker Application (CS5392) 
 
-Authors: Borislav Sabotinov, Sivaranjani Ravichandran, Sneha Sirnam, Sriram Putta
-Source Code: https://github.com/TXST-SoftEng-RR1/cs5392-project
-Website: https://ctl-checker-pprkprkh4a-uc.a.run.app/
+Authors: Borislav Sabotinov, Sivaranjani Ravichandran, Sneha Sirnam, Sriram Putta    
+- Source Code: https://github.com/TXST-SoftEng-RR1/cs5392-project
+- Website: https://ctl-checker-pprkprkh4a-uc.a.run.app/
 
 ## Pre-requisites and Dependencies
 
-Apache Maven: https://maven.apache.org/     
-Node.js and NPM: https://nodejs.org/en/
-JavCC: https://javacc.github.io/javacc/
+- Apache Maven: https://maven.apache.org/     
+- Node.js and NPM: https://nodejs.org/en/    
+- JavCC: https://javacc.github.io/javacc/
 
 ## Working with Git
 
@@ -33,6 +33,9 @@ JavaCC, on the other hand, is a top-down parser.
 
 ## Build the app
 
+To view dependency tree: 
+`mvn dependency:tree`
+
 To build the application manually: 
 `mvn clean package`    
 
@@ -49,7 +52,7 @@ After building the app
 
 You should see "CS5392 CTL Checker App says hello!World!"
 
-## Viewing the API
+## Viewing the API documentation
 To view the available API endpoints and details about them:
 
 Ensure the project is running.    
