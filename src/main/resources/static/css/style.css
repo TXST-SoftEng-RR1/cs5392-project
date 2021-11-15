@@ -34,3 +34,11 @@ textarea {
 .badge {
     margin-left: 10px;
 }
+
+.errorMsg{
+    color: red;
+}
+
+.hidden {
+    visibility: hidden;
+}

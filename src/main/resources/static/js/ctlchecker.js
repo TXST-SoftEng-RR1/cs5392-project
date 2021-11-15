@@ -2,6 +2,27 @@ jQuery(document).ready(function() {
     let ctlModel = $("#ctlModelFile");
     let modelName;
 
+    let CTLRegex = /^([a-z]{1})$|\(*.&*.\)|\(*.\|*.\)|\(*.->*.\)/i
+    console.log("Test Regex validation: ");
+    console.log("a: " + CTLRegex.test("a"));
+    console.log("true: " + CTLRegex.test("true"));
+
+    $("#formulaInput").on('input', function () {
+        let errorMsg = $(".errorMsg");
+
+        // mismatch
+        let formulaVal = String($(this).val());
+        if (! formulaVal.match(CTLRegex)) {
+           console.log($(this).val());
+           errorMsg.removeClass('hidden');
+           errorMsg.show();
+       } else {
+           console.log("Successful formula match!");
+           errorMsg.addClass('hidden');
+           errorMsg.hide();
+       }
+    });
+
     ctlModel.change(function getFile(event) {
         modelName = ctlModel.val().replace('C:\\fakepath\\', '');
         console.log("Kripke model file name: " + modelName);
@@ -66,12 +87,12 @@ jQuery(document).ready(function() {
 
 
     function handleData(data , textStatus, jqXHR  ) {
-        console.log(data + textStatus);
+        console.log(data + " " + textStatus);
         //do some stuff
     }
 
     function handleError(data, textStatus, jqXHR) {
-        console.log(data + textStatus);
+        console.log(data + " " + textStatus);
     }
 
 });

@@ -44,28 +44,29 @@
 
 
     <div class="container">
-        <div class="row" style="width: 10%;" >
-
-        </div>
         <br/>
         <div class="row">
             <div class="col-sm">
                 <label for="ctlModelFile" class="textColor">Load JSON Model: &nbsp; </label>
-                <input id="ctlModelFile" type="file" class="textColor">
+                <input id="ctlModelFile" type="file" class="textColor" />
                 <hr style="color: lightgray"/>
                 <label for="content-target" class="textColor">Raw Model Definition: </label>
-                <textarea id="content-target" style="margin-top: 10px;"></textarea>
+                <textarea id="content-target" style="margin-top: 10px;" disabled></textarea>
                 <button id="submitModel" type="button" class="btn-primary">Submit</button>
             </div>
             <div class="col-sm">
-
+                <label for="formulaInput" class="textColor">CTL Forumula: &nbsp; </label>
+                <input id="formulaInput" type="text" name="formulaInput"/>
+                <br/>
+                <span class="errorMsg hidden textColor">Please Enter a Valid CTL Formula</span>
             </div>
         </div>
     </div>
 
+
     <br/>
 
-    <img src="img/texas-state-bobcats-logo.png" id="watermark">
+    <img src="img/texas-state-bobcats-logo.png" id="watermark" alt="Texas State University bobcat logo.">
     <footer id="ftr" class="py-4 bg-dark flex-shrink-0">
         <div class="container text-center">
             <a href="https://www.txstate.edu/" class="text-white-50">&copy; 2021 Texas State University</a>
@@ -100,6 +101,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div>BNF for the CTL "language": </div>
+                    <div style="border: 1px dashed #501214; padding: 5px; width: 60%;">
+                        <div>φ ::= ⊥|T| p | (~φ) | (φ & φ) | (φ | φ) | (φ -> φ) | AX φ | EX φ | </div>
+                        <br/>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AF φ | EF φ | AG φ | EG φ | A[φ U φ] | E[φ U φ]</div>
+                    </div>
+                    <br/>
                     The Kripke model should be defined using JSON format. Below is an example.
                     <img src="img/KripkeJSONDefinition.png" alt="Example of a Kripke structure defined in JSON.">
                 </div>
