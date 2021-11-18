@@ -21,6 +21,8 @@ textarea {
     opacity:0.2;
     color:white;
     height: 400px;
+    bottom: 72px;
+    left: 400px;
 }
 
 #ftr {

@@ -46,19 +46,22 @@
     <div class="container">
         <br/>
         <div class="row">
-            <div class="col-sm">
+            <div class="col-sm" style="overflow-y: scroll; height: 400px;">
                 <label for="ctlModelFile" class="textColor">Load JSON Model: &nbsp; </label>
                 <input id="ctlModelFile" type="file" class="textColor" />
                 <hr style="color: lightgray"/>
                 <label for="content-target" class="textColor">Raw Model Definition: </label>
                 <textarea id="content-target" style="margin-top: 10px;" disabled></textarea>
                 <button id="submitModel" type="button" class="btn-primary">Submit</button>
+                <br/>
+                <br/>
+                <div class="textColor">CTL Model Representation: </div>
+                <canvas id="ctlModelCanvas" style="width: 100%;" height="400"></canvas>
             </div>
             <div class="col-sm">
                 <label for="formulaInput" class="textColor">CTL Forumula: &nbsp; </label>
                 <input id="formulaInput" type="text" name="formulaInput"/>
-                <br/>
-                <span class="errorMsg hidden textColor">Please Enter a Valid CTL Formula</span>
+                <span class="errorMsg hidden textColor">Please Enter a Valid CTL Formula (refer to Usage Inst. for details)</span>
             </div>
         </div>
     </div>

@@ -56,7 +56,14 @@ public class CtlCheckerController {
         kripkeModelParser.loadModel(model);
         logger.info("Model received: ");
         logger.info(model);
-        return "Model received.";
+        return "Model received. ";
+    }
+
+    @PostMapping(value = "/uploadFormula", produces = "text/plain")
+    @ResponseBody
+    public String uploadFormula(@RequestBody String CTLFormula) {
+
+        return "Formula received. ";
     }
 
 }
