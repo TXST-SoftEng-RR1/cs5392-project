@@ -21,6 +21,8 @@ textarea {
     opacity:0.2;
     color:white;
     height: 400px;
+    bottom: 72px;
+    left: 400px;
 }
 
 #ftr {
@@ -33,4 +35,20 @@ textarea {
 
 .badge {
     margin-left: 10px;
+}
+
+.errorMsg{
+    color: red;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+#stateSelector:disabled {
+    cursor: not-allowed;
+}
+
+#formulaInput:disabled {
+    cursor: not-allowed;
 }
