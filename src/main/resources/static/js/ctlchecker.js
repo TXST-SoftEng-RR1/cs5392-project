@@ -7,6 +7,7 @@ jQuery(document).ready(function() {
     let ctlModel = $("#ctlModelFile");
     let modelName;
 
+    // TODO: allow expressions such as EGp or AXt
     let CTLRegex = /^([a-z]{1})$|\(*.&*.\)|\(*.\|*.\)|\(*.->*.\)|\[*.U*.]|^false$|^true$/i
     console.log("Test Regex validation: ");
     console.log("a: " + CTLRegex.test("a"));
@@ -14,6 +15,9 @@ jQuery(document).ready(function() {
 
     let stateMap = new Map();
 
+    /**
+     * Pre-validation of CTL formula using regex defining limited rules
+     */
     $("#formulaInput").on('input', function () {
         let errorMsg = $(".errorMsg");
 
@@ -30,6 +34,9 @@ jQuery(document).ready(function() {
        }
     });
 
+    /**
+     * Trigger the model upload and parse process
+     */
     ctlModel.change(function getFile(event) {
         modelName = ctlModel.val().replace('C:\\fakepath\\', '');
         console.log("Kripke model file name: " + modelName);
@@ -49,7 +56,12 @@ jQuery(document).ready(function() {
     });
 
 
-
+    /**
+     * Attempt to parse the model to determine if it is valid JSON
+     * If it is, depict the model graphically and textually.
+     * @param target
+     * @param file
+     */
     function placeFileContent(target, file) {
         readFileContent(file).then(content => {
             // try to parse as JSON to force an error if it is not valid
@@ -58,6 +70,7 @@ jQuery(document).ready(function() {
             target.val(content);
             console.log("drawing model...");
             drawModel(json);
+            enableFields();
         }).catch(error => {
             $('#invalidModelModal').modal('toggle');
             console.log(error);
@@ -81,6 +94,10 @@ jQuery(document).ready(function() {
         $("#usageInstructionsModal").modal('toggle');
     });
 
+    /**
+     * Submit the JSON model to the back-end, to create a
+     * Kripke structure.
+     */
     $("#submitModel").click(function () {
             $.ajax({
                 url: '/uploadModel',
@@ -177,7 +194,7 @@ jQuery(document).ready(function() {
         let dy = toy - fromy;
         let angle = Math.atan2(dy, dx);
         context.beginPath();
-        context.moveTo(fromx, fromy);
+        context.moveTo(fromx, fromy + (15 * toggle));
         //context.lineTo(tox, toy);
         let sx = -150 * toggle;
         let sy = 70 * toggle;
@@ -222,6 +239,10 @@ jQuery(document).ready(function() {
         return Math.atan2((ey - sy), (ex - sx));
     }
 
+    function enableFields() {
+        $("#formulaInput").prop("disabled", false);
+        $("#stateSelector").prop("disabled", false);
+    }
 
 
 });

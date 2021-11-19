@@ -44,3 +44,11 @@ textarea {
 .hidden {
     visibility: hidden;
 }
+
+#stateSelector:disabled {
+    cursor: not-allowed;
+}
+
+#formulaInput:disabled {
+    cursor: not-allowed;
+}
