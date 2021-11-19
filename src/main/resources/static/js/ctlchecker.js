@@ -1,4 +1,7 @@
 jQuery(document).ready(function() {
+    let formulaInput = $("#formulaInput");
+    let stateSelector = $("#stateSelector");
+
     const canvas = document.getElementById("ctlModelCanvas");
     const context = canvas.getContext('2d');
     context.fillStyle = "white";
@@ -18,7 +21,7 @@ jQuery(document).ready(function() {
     /**
      * Pre-validation of CTL formula using regex defining limited rules
      */
-    $("#formulaInput").on('input', function () {
+    formulaInput.on('input', function () {
         let errorMsg = $(".errorMsg");
 
         // mismatch
@@ -71,6 +74,7 @@ jQuery(document).ready(function() {
             console.log("drawing model...");
             drawModel(json);
             enableFields();
+            populateStateSelector();
         }).catch(error => {
             $('#invalidModelModal').modal('toggle');
             console.log(error);
@@ -112,8 +116,21 @@ jQuery(document).ready(function() {
         }
     );
 
+    /**
+     * @author Sneha Sirnam
+     * Submit the CTL formula to the back-end along with a state
+     * to see if the model holds for that state.
+     */
+    $("#submitFormula").click(function () {
 
+    });
 
+    /**
+     *
+     * @param data
+     * @param textStatus
+     * @param jqXHR
+     */
     function handleData(data , textStatus, jqXHR  ) {
         console.log(data + " " + textStatus);
         //do some stuff
@@ -240,9 +257,17 @@ jQuery(document).ready(function() {
     }
 
     function enableFields() {
-        $("#formulaInput").prop("disabled", false);
-        $("#stateSelector").prop("disabled", false);
+        formulaInput.prop("disabled", false);
+        stateSelector.prop("disabled", false);
     }
 
+    /**
+     * @author Sivaranjani
+     * Dynamically populate the state selector dropdown
+     * with state values from the Kripke JSON model
+     */
+    function populateStateSelector() {
+
+    }
 
 });

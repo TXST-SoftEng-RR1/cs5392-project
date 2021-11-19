@@ -59,9 +59,15 @@ public class CtlCheckerController {
         return "Model received. ";
     }
 
+    /**
+     * @author Sriram
+     * @param CTLFormula
+     * @param state
+     * @return
+     */
     @PostMapping(value = "/uploadFormula", produces = "text/plain")
     @ResponseBody
-    public String uploadFormula(@RequestBody String CTLFormula) {
+    public String uploadFormula(@RequestBody String CTLFormula, @RequestBody String state) {
 
         return "Formula received. ";
     }
