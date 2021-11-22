@@ -2,9 +2,14 @@ body {
     background-color: #501214 !important;
 }
 
-textarea {
+#content-target {
     width: 100%;
-    height: 150px;
+    height: 200px;
+}
+
+#validationResultsArea {
+    width: 100%;
+    height: 100px;
 }
 
 .badge {

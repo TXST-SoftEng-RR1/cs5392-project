@@ -46,30 +46,59 @@
     <div class="container">
         <br/>
         <div class="row">
-            <div class="col-sm" style="overflow-y: scroll; height: 400px;">
-                <label for="ctlModelFile" class="textColor">Load JSON Model: &nbsp; </label>
-                <input id="ctlModelFile" type="file" class="textColor" />
-                <hr style="color: lightgray"/>
-                <label for="content-target" class="textColor">Raw Model Definition: </label>
-                <textarea id="content-target" style="margin-top: 10px;" disabled></textarea>
+            <label for="ctlModelFile" class="textColor">Load JSON Model: &nbsp; </label>
+            <input id="ctlModelFile" type="file" class="textColor" />
+            <br/>
+            <br/>
+            <div class="col-7">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#nav-home" role="tab"
+                           aria-controls="nav-home"
+                           aria-selected="true">
+                            CTL JSON
+                        </a>
+                        <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                           href="#nav-profile" role="tab"
+                           aria-controls="nav-profile"
+                           aria-selected="false">
+                            CTL Graph
+                        </a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                        style="padding: 5px;">
+                        <label for="content-target" class="textColor">Raw Model Definition: </label>
+                        <textarea id="content-target" style="margin-top: 10px;" disabled></textarea>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
+                        style="overflow-y: scroll; height: 280px; padding: 5px;">
+                        <div class="textColor">CTL Model Representation: </div>
+                        <canvas id="ctlModelCanvas" width="300" height="300"></canvas>
+                    </div>
+                </div>
+                <br/>
                 <button id="submitModel" type="button" class="btn-primary">Submit</button>
-                <br/>
-                <br/>
-                <div class="textColor">CTL Model Representation: </div>
-                <canvas id="ctlModelCanvas" style="width: 100%;" height="400"></canvas>
             </div>
-            <div class="col-sm">
-                <label for="formulaInput" class="textColor">CTL Forumula: &nbsp; </label>
-                <input id="formulaInput" type="text" name="formulaInput" disabled/>
-                <span class="errorMsg hidden textColor">Please Enter a Valid CTL Formula (refer to Usage Inst. for details)</span>
-            </div>
-            <div class="col-sm">
-                <select id="stateSelector" class="form-select" aria-label="Select a state to evaluate." disabled>
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+            <div class="col" style="margin-left: 20px;">
+                <div class="textColor">Select state: </div>
+                <select id="stateSelector" class="form-select-sm" aria-label="Select a state to evaluate."
+                        disabled style="width: 30%; float: left;">
                 </select>
+                <input id="formulaInput" type="text" name="formulaInput"
+                       disabled style="margin-left: 10px;" placeholder="Enter CTL formula"/>
+                <br/>
+                <span class="errorMsg hidden textColor">
+                    Please Enter a Valid CTL Formula (refer to Usage Inst. for details)
+                </span>
+                <br/>
+                <button id="submitFormula" type="button" class="btn-primary">Verify Formula</button>
+                <hr style="color: lightgray;"/>
+                <label for="validationResultsArea" class="textColor">Validation Results: </label>
+                <br/>
+                <textarea id="validationResultsArea" disabled></textarea>
             </div>
         </div>
     </div>

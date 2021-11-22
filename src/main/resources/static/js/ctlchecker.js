@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
     let modelName;
 
     // TODO: allow expressions such as EGp or AXt
-    let CTLRegex = /^([a-z]{1})$|\(*.&*.\)|\(*.\|*.\)|\(*.->*.\)|\[*.U*.]|^false$|^true$/i
+    let CTLRegex = /^([a-z]{1})$|\(*.&*.\)|\(*.\|*.\)|\(*.->*.\)|\[*.U*.]|^false$|^true$|[A-Z]{2}[a-z]{1}/i
     console.log("Test Regex validation: ");
     console.log("a: " + CTLRegex.test("a"));
     console.log("true: " + CTLRegex.test("true"));
@@ -74,7 +74,7 @@ jQuery(document).ready(function() {
             console.log("drawing model...");
             drawModel(json);
             enableFields();
-            populateStateSelector();
+            populateStateSelector(json);
         }).catch(error => {
             $('#invalidModelModal').modal('toggle');
             console.log(error);
@@ -266,7 +266,12 @@ jQuery(document).ready(function() {
      * Dynamically populate the state selector dropdown
      * with state values from the Kripke JSON model
      */
-    function populateStateSelector() {
+    function populateStateSelector(json) {
+        let states = json["kripke-model"].states;
+
+        for (let state in states) {
+            stateSelector.append('<option value=' + states[state] + '>' + states[state] + '</option>');
+        }
 
     }
 
