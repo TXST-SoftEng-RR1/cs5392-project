@@ -6,7 +6,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import edu.txstate.ctl_parser.model.KripkeStructure;
 import edu.txstate.ctl_parser.model.State;
+import edu.txstate.ctl_parser.util.javacc_parser.ASTCTLFormula;
+import edu.txstate.ctl_parser.util.javacc_parser.CTLParser;
+import edu.txstate.ctl_parser.util.javacc_parser.ParseException;
+import springfox.documentation.spring.web.json.Json;
 
+import java.io.InputStream;
 import java.util.logging.Logger;
 
 /**
@@ -18,20 +23,20 @@ import java.util.logging.Logger;
  */
 public class KripkeModelParser {
     private static final Logger logger = Logger.getLogger(KripkeModelParser.class.getName());
-    private JsonObject kripkeJsonObj;
-    private KripkeStructure kripkeStructure;
     private static final int FROM_STATE_IDX = 0;
     private static final int TO_STATE_IDX = 1;
 
+    private JsonObject kripkeJsonObj;
+    private KripkeStructure kripkeStructure;
 
     public KripkeModelParser() {
         kripkeJsonObj = new JsonObject();
-        kripkeStructure = null;
+        kripkeStructure = new KripkeStructure();
     }
 
-    public void loadModel(String model) {
+    public KripkeStructure loadModel(JsonObject model) {
         try {
-            kripkeJsonObj = JsonParser.parseString(model).getAsJsonObject();
+            kripkeJsonObj = model;
             loadStates();
             loadAtoms();
             loadTransitions();
@@ -39,12 +44,12 @@ public class KripkeModelParser {
             logger.warning(e.getMessage());
             e.printStackTrace();
         }
+        return kripkeStructure;
     }
 
     private void loadStates() {
         JsonArray states = kripkeJsonObj.getAsJsonObject("kripke-model")
                 .getAsJsonArray("states");
-        kripkeStructure = new KripkeStructure();
 
         for (int i = 0; i < states.size(); i++) {
             State state = new State(states.get(i).getAsString());

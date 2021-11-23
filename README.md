@@ -81,6 +81,7 @@ The following guides illustrate how to use some features concretely:
 [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)    
 [JJTree Reference](https://www.cs.purdue.edu/homes/hosking/javacc/doc/JJTree.html)
 [JavaCC Reference](https://javacc.github.io/javacc/tutorials/examples.html#javacc-instructions)
+[Spring REST Variables](https://stackoverflow.com/questions/55949044/global-variables-in-controller-class-are-overridden-with-latest-session-opened)
 
 ## Notes
 

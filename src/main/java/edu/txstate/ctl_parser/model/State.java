@@ -59,7 +59,11 @@ public class State {
     }
 
     public boolean hasAtom(String atom) {
-        return atoms.contains(atom);
+        for (Atom tmpAtom : atoms) {
+            if (tmpAtom.getName() == atom.charAt(0))
+                return true;
+        }
+        return false;
     }
 
     public void mark(String mark) {

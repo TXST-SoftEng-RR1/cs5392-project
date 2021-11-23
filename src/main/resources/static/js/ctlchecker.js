@@ -98,23 +98,23 @@ jQuery(document).ready(function() {
         $("#usageInstructionsModal").modal('toggle');
     });
 
-    /**
-     * Submit the JSON model to the back-end, to create a
-     * Kripke structure.
-     */
-    $("#submitModel").click(function () {
-            $.ajax({
-                url: '/uploadModel',
-                method: 'POST',
-                type: 'POST', // for jQuery < 1.9
-                processData: false,
-                contentType: 'application/json',
-                data: $('#content-target').val(),
-                success: handleData,
-                error: handleError
-            });
-        }
-    );
+    // /**
+    //  * Submit the JSON model to the back-end, to create a
+    //  * Kripke structure.
+    //  */
+    // $("#submitModel").click(function () {
+    //         $.ajax({
+    //             url: '/validateModel',
+    //             method: 'POST',
+    //             type: 'POST', // for jQuery < 1.9
+    //             processData: false,
+    //             contentType: 'application/json',
+    //             data: $('#content-target').val(),
+    //             success: handleData,
+    //             error: handleError
+    //         });
+    //     }
+    // );
 
     /**
      * @author Sneha Sirnam
@@ -122,7 +122,19 @@ jQuery(document).ready(function() {
      * to see if the model holds for that state.
      */
     $("#submitFormula").click(function () {
+        let myData = "{\"formula\": " + "\"" + formulaInput.val() + "\"" +
+            ", \"state\": " + "\"" + stateSelector.val() + "\"" + "}";
 
+        $.ajax({
+            url: '/validateModel',
+            method: 'POST',
+            type: 'POST', // for jQuery < 1.9
+            processData: false,
+            contentType: 'application/json',
+            data: "[" + $('#content-target').val() + "," + myData + "]",
+            success: handleData,
+            error: handleError
+        });
     });
 
     /**

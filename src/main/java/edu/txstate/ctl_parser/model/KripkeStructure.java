@@ -1,10 +1,12 @@
 package edu.txstate.ctl_parser.model;
 
+import edu.txstate.ctl_parser.util.javacc_parser.ASTCTLFormula;
 import edu.txstate.ctl_parser.util.javacc_parser.CTLFormulaNode;
+import edu.txstate.ctl_parser.util.javacc_parser.CTLParser;
+import edu.txstate.ctl_parser.util.javacc_parser.ParseException;
 
+import java.io.InputStream;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class KripkeStructure {
     private HashMap<String, State> states;
@@ -19,6 +21,11 @@ public class KripkeStructure {
 
     public HashMap<String, State> getStates() {
         return states;
+    }
+
+    public State getState(int idx) {
+        State[] statesArr = states.values().toArray(new State[0]);
+        return statesArr[idx];
     }
 
     public void addState(State state) {
@@ -40,8 +47,9 @@ public class KripkeStructure {
 //        return -1;
 //    }
 
-    public boolean checkFormula(CTLFormulaNode formula, String stateName) {
+    public boolean checkFormula(ASTCTLFormula formula, String stateName) {
         mark(formula);
+        printMarkings();
         return formula.check(getState(stateName));
     }
 
@@ -50,6 +58,19 @@ public class KripkeStructure {
             mark((CTLFormulaNode) formula.jjtGetChild(i));
         }
         formula.mark(this);
+    }
+
+    public boolean validateFormula(InputStream formula, String state) {
+        ASTCTLFormula astCtlFormula;
+        CTLParser parser = new CTLParser(formula);
+        try {
+            astCtlFormula = parser.Formula();
+        } catch (ParseException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+
+        return this.checkFormula(astCtlFormula, state);
     }
 
     @Override
@@ -63,8 +84,8 @@ public class KripkeStructure {
     }
 
     public void printMarkings() {
-//        for (State state : states) {
-//            System.out.println(state.getName() + ": " + state.toMarkings());
-//        }
+        for (State state : states.values()) {
+            System.out.println(state.getName() + ": " + state.toMarkings());
+        }
     }
 }

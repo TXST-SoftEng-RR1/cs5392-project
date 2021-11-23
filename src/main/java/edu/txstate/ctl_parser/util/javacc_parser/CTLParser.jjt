@@ -21,7 +21,7 @@ options {
     DEBUG_PARSER        = true;
     ERROR_REPORTING     = true;
     SANITY_CHECK        = true; // detect left recursion and ambiguity
-    STATIC              = true; // only one parser object may be present
+    STATIC              = true; // only permit one parser
 }
 
 PARSER_BEGIN(CTLParser)
@@ -62,7 +62,6 @@ public class CTLParser {
             System.err.println(e.getMessage());
         }
     } // end main
-}} // end main
 } // end class
 
 PARSER_END(CTLParser)
@@ -117,7 +116,7 @@ TOKEN : {
     < ATOM : ["a"-"z"](["a"-"z","0"-"9"])* >
 }
 
-ASTFormula Formula():
+ASTCTLFormula Formula():
 {}
 {
   Phi()< EOF >
