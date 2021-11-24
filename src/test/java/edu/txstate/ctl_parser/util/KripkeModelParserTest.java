@@ -38,57 +38,5 @@ class KripkeModelParserTest {
         assertTrue(kripkeModelParser.getKripkeStructure().toString().contains("qtr"));
     }
 
-    /**
-     * Check E[t U p] against the defined model, where
-     * s1 contains atoms pq, transitions to s2 and s3
-     * s2 contains atoms qtr, NO transitions
-     * s3 contains no atoms, transitions to s4
-     * s4 contains atom t, transitions to s2
-     * Result should be FALSE, E[t U p] does NOT hold for
-     * state s2.
-     */
-    @Test
-    void validateFormula_doesNotHold_basicCTL() {
-        KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-        String formula = "E[t U p]";
-        String state = "s2";
-        InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
-        assertFalse(kripkeStructure.validateFormula(formulaStream, state));
-    }
 
-    /**
-     * Check E[t U p] against the defined model, where
-     * s1 contains atoms pq, transitions to s2 and s3
-     * s2 contains atoms qtr, NO transitions
-     * s3 contains no atoms, transitions to s4
-     * s4 contains atom t, transitions to s2
-     * Result should be FALSE, E[t U q] does NOT hold for
-     * state s2.
-     */
-    @Test
-    void validateFormula_holds_untilCTL() {
-        KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-        String formula = "E[t U q]";
-        String state = "s2";
-        InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
-        assertTrue(kripkeStructure.validateFormula(formulaStream, state));
-    }
-
-    /**
-     * Check E[t U p] against the defined model, where
-     * s1 contains atoms pq, transitions to s2 and s3
-     * s2 contains atoms qtr, NO transitions
-     * s3 contains no atoms, transitions to s4
-     * s4 contains atom t, transitions to s2
-     * Result should be FALSE, E[t U q] does NOT hold for
-     * state s2.
-     */
-    @Test
-    void validateFormula_holds_basicCTL() {
-        KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-        String formula = "EXr";
-        String state = "s1";
-        InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
-        assertTrue(kripkeStructure.validateFormula(formulaStream, state));
-    }
 }

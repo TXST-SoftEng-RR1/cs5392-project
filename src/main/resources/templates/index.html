@@ -53,16 +53,17 @@
     <hr/>
 
     <a href="/swagger-ui/index.html" target="_blank" class="badge badge-pill badge-info">
-        Swagger UI
+        Swagger API doc
     </a>
     <a href="https://github.com/TXST-SoftEng-RR1/cs5392-project" target="_blank" class="badge badge-pill badge-info">
         Source Code
     </a>
-
-    <a href="" class="badge badge-pill badge-info" data-bs-toggle="modal" data-bs-target="#usageInstructionsModal">
+    <a class="badge badge-pill badge-info" data-bs-toggle="modal" data-bs-target="#usageInstructionsModal">
         Usage Instructions
     </a>
-
+    <a id="getModels" class="badge badge-pill badge-info hidden">
+        Access Stored Models
+    </a>
 
     <div class="container">
         <br/>
@@ -220,6 +221,28 @@
         </div>
     </div>
     <!-- END Account Modal -->
+
+    <!-- Model Data Modal -->
+    <div class="modal fade" id="existingModelsModal" tabindex="-1" role="dialog" aria-labelledby="invalidModelModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-gold">
+                    <h5 class="modal-title" id="existingModelsModalTitle">Existing Model Definitions: </h5>
+                    <button id="closeExistingModelsModal" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="modelDataTbl">
+                        <tr>
+                            <th>Model ID</th>
+                            <th>Model Definition (JSON)</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script th:src="@{/webjars/jquery/3.6.0/jquery.js}" type="application/javascript"></script>
     <script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.js}" type="application/javascript"></script>

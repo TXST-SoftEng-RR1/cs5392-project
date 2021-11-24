@@ -36,7 +36,7 @@ public class KripkeStructure {
         return states.size();
     }
 
-    public boolean checkFormula(ASTCTLFormula formula, String stateName) {
+    private boolean checkFormula(ASTCTLFormula formula, String stateName) {
         mark(formula);
         printMarkings();
         return formula.check(getState(stateName));
@@ -51,7 +51,12 @@ public class KripkeStructure {
 
     public boolean validateFormula(InputStream formula, String state) {
         ASTCTLFormula astCtlFormula;
-        CTLParser parser = new CTLParser(formula);
+        CTLParser parser = null;
+        if (CTLParser.isJj_initialized_once())
+            CTLParser.ReInit(formula);
+        else
+            parser = new CTLParser(formula);
+
         try {
             astCtlFormula = parser.Formula();
         } catch (ParseException e) {

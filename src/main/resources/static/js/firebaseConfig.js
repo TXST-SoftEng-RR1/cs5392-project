@@ -1,13 +1,8 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
 import {getAnalytics} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-analytics.js";
-import {addDoc, collection, getFirestore} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js"
-import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signOut
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js"
+import {addDoc, getDocs, collection, query, where, getFirestore} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js"
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -40,6 +35,7 @@ jQuery(document).ready(function () {
             // User is signed in.
             document.getElementById('userAccountNavItem').classList.remove("hidden");
             document.getElementById('userLogInNavItem').classList.add("hidden");
+            document.getElementById('getModels').classList.remove("hidden");
 
             let photoURL = user.photoURL;
             if (photoURL !== null) {
@@ -68,6 +64,7 @@ jQuery(document).ready(function () {
             // user is logged out
             document.getElementById('userAccountNavItem').classList.add("hidden");
             document.getElementById('userLogInNavItem').classList.remove("hidden");
+            document.getElementById('getModels').classList.add("hidden");
         }
     });
 
@@ -113,19 +110,44 @@ jQuery(document).ready(function () {
         }
 
         if (user) {
-            async function test() {
+            async function saveModel() {
                 // Create our initial doc
                 const docRef = await addDoc(collection(db, "models"), {
+                    contributorID: user.uid,
                     contributor: user.displayName,
                     modelDef: model
                 });
-                console.log("Document written with ID: ", docRef.id);
+                console.log("Model written with ID: ", docRef.id);
             }
-
-            test();
+            saveModel();
         } else {
-            alert("You must sign in as a valid user!")
+            alert("You must sign in as a valid user!");
         }
-
     });
+
+    $("#getModels").click( function () {
+        if (user) {
+            async function retrieveModels() {
+                const q = query(collection(db, "models"), where("contributorID", "==", user.uid));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    addRow(doc.id, doc.data());
+                });
+            }
+            retrieveModels();
+            $('#existingModelsModal').modal('toggle');
+        } else {
+            alert("You must sign in as a valid user!");
+        }
+    });
+
+    function addRow(id, data) {
+        let payload =   "<tr>" +
+                            "<td>"+ id +"</td>" +
+                            "<td>"+ JSON.stringify(data) +"</td>" +
+                        "</tr>"
+        $("#modelDataTbl").append(payload);
+    }
 });
