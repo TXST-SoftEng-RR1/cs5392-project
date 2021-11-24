@@ -15,10 +15,6 @@ public class KripkeStructure {
         states = new HashMap<>();
     }
 
-//    private void addTransition(String s1, String s2) {
-//
-//    }
-
     public HashMap<String, State> getStates() {
         return states;
     }
@@ -39,13 +35,6 @@ public class KripkeStructure {
     public int getNumStates() {
         return states.size();
     }
-
-//    public int getStateIndex(String name) {
-//        for (int i = 0; i < states.length; i++) {
-//            if (states[i].getName().equals(name)) return i;
-//        }
-//        return -1;
-//    }
 
     public boolean checkFormula(ASTCTLFormula formula, String stateName) {
         mark(formula);

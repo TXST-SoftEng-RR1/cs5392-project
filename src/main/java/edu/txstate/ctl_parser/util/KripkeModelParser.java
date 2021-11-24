@@ -2,16 +2,10 @@ package edu.txstate.ctl_parser.util;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import edu.txstate.ctl_parser.model.KripkeStructure;
 import edu.txstate.ctl_parser.model.State;
-import edu.txstate.ctl_parser.util.javacc_parser.ASTCTLFormula;
-import edu.txstate.ctl_parser.util.javacc_parser.CTLParser;
-import edu.txstate.ctl_parser.util.javacc_parser.ParseException;
-import springfox.documentation.spring.web.json.Json;
 
-import java.io.InputStream;
 import java.util.logging.Logger;
 
 /**
@@ -69,7 +63,6 @@ public class KripkeModelParser {
                 for (int j = 0; j < atomsForSpecificState.size(); j++) {
                     tmpState.addAtom(atomsForSpecificState.get(j).getAsString().charAt(0));
                 }
-
             }
         }
     }

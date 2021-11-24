@@ -46,24 +46,9 @@ public class CtlCheckerController {
 
     /**
      * "The @ResponseBody annotation [...] can be put on a method and indicates that the
-     * return type should be written straight to the HTTP response body (and not placed in a Model,
-     * or interpreted as a view name)."
-     * http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody
-     *
-     * @param model
-     * @return
-     */
-//    @PostMapping(value = "/uploadModel", produces = "text/plain")
-//    @ResponseBody
-//    public String uploadModel(@RequestBody String model) {
-//        KripkeModelParser kripkeModelParser = new KripkeModelParser();
-//        kripkeStructure = kripkeModelParser.loadModel(model);
-//        logger.info("Model received: ");
-//        logger.info(model);
-//        return "Model received. ";
-//    }
-
-    /**
+     *      * return type should be written straight to the HTTP response body (and not placed in a Model,
+     *      * or interpreted as a view name)."
+     *      * http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody
      * @param data
      * @return
      * @author Sriram and Boris

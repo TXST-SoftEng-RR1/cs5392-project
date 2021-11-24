@@ -37,11 +37,6 @@ public class State {
     }
 
     public ArrayList<State> getTransitions() {
-//        State[] result = new State[transitions.size()];
-//        for (int i = 0; i < transitions.size(); i++) {
-//            result[i] = transitions.get(i);
-//        }
-//        return result;
         return transitions;
     }
 

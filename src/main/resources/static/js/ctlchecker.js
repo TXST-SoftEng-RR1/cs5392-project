@@ -1,4 +1,4 @@
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     let formulaInput = $("#formulaInput");
     let stateSelector = $("#stateSelector");
 
@@ -26,15 +26,15 @@ jQuery(document).ready(function() {
 
         // mismatch
         let formulaVal = String($(this).val());
-        if (! formulaVal.match(CTLRegex)) {
-           console.log($(this).val());
-           errorMsg.removeClass('hidden');
-           errorMsg.show();
-       } else {
-           console.log("Successful formula match!");
-           errorMsg.addClass('hidden');
-           errorMsg.hide();
-       }
+        if (!formulaVal.match(CTLRegex)) {
+            console.log($(this).val());
+            errorMsg.removeClass('hidden');
+            errorMsg.show();
+        } else {
+            console.log("Successful formula match!");
+            errorMsg.addClass('hidden');
+            errorMsg.hide();
+        }
     });
 
     /**
@@ -122,8 +122,9 @@ jQuery(document).ready(function() {
      * to see if the model holds for that state.
      */
     $("#submitFormula").click(function () {
-        let myData = "{\"formula\": " + "\"" + formulaInput.val() + "\"" +
+        let formulaData = "{\"formula\": " + "\"" + formulaInput.val() + "\"" +
             ", \"state\": " + "\"" + stateSelector.val() + "\"" + "}";
+        let combinedDataObj = "[" + $('#content-target').val() + "," + formulaData + "]";
 
         $.ajax({
             url: '/validateModel',
@@ -131,7 +132,7 @@ jQuery(document).ready(function() {
             type: 'POST', // for jQuery < 1.9
             processData: false,
             contentType: 'application/json',
-            data: "[" + $('#content-target').val() + "," + myData + "]",
+            data: combinedDataObj,
             success: handleData,
             error: handleError
         });
@@ -143,7 +144,7 @@ jQuery(document).ready(function() {
      * @param textStatus
      * @param jqXHR
      */
-    function handleData(data , textStatus, jqXHR  ) {
+    function handleData(data, textStatus, jqXHR) {
         console.log(data + " " + textStatus);
         $("#validationResultsArea").val(data);
     }
@@ -196,9 +197,9 @@ jQuery(document).ready(function() {
         context.font = '8pt Calibri';
         context.fillStyle = 'white';
         context.textAlign = 'center';
-        context.fillText(atoms, xOffset, yOffset+3);
+        context.fillText(atoms, xOffset, yOffset + 3);
         context.fillStyle = 'black';
-        context.fillText(label, xOffset, yOffset+25);
+        context.fillText(label, xOffset, yOffset + 25);
     }
 
     function drawTransitions(json) {
@@ -246,20 +247,20 @@ jQuery(document).ready(function() {
         let hx = sizex / 2;
         let hy = sizey / 2;
 
-        context.translate((locx ), (locy));
+        context.translate((locx), (locy));
         context.rotate(angle);
-        context.translate(-hx,-hy);
+        context.translate(-hx, -hy);
 
         context.beginPath();
-        context.moveTo(0,0);
-        context.lineTo(0,1*sizey);
-        context.lineTo(sizex,hy);
+        context.moveTo(0, 0);
+        context.lineTo(0, 1 * sizey);
+        context.lineTo(sizex, hy);
         context.closePath();
         context.fill();
 
-        context.translate(hx,hy);
+        context.translate(hx, hy);
         context.rotate(-angle);
-        context.translate(-locx,-locy);
+        context.translate(-locx, -locy);
     }
 
     // returns radians
