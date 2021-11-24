@@ -145,7 +145,7 @@ jQuery(document).ready(function() {
      */
     function handleData(data , textStatus, jqXHR  ) {
         console.log(data + " " + textStatus);
-        //do some stuff
+        $("#validationResultsArea").val(data);
     }
 
     function handleError(data, textStatus, jqXHR) {
