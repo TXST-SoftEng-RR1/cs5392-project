@@ -224,7 +224,7 @@
 
     <!-- Model Data Modal -->
     <div class="modal fade" id="existingModelsModal" tabindex="-1" role="dialog" aria-labelledby="invalidModelModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-gold">
                     <h5 class="modal-title" id="existingModelsModalTitle">Existing Model Definitions: </h5>
@@ -233,12 +233,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table id="modelDataTbl">
-                        <tr>
-                            <th>Model ID</th>
-                            <th>Model Definition (JSON)</th>
-                        </tr>
-                    </table>
+                    <div style="overflow-y: scroll; height: 350px;">
+                        <table id="modelDataTbl">
+                            <thead>
+                                <tr>
+                                    <th>Model ID</th>
+                                    <th>Model Definition (JSON)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <button id="loadExistingModelBtn" type="button" class="btn btn-primary">
+                        Load Model
+                    </button>
                 </div>
             </div>
         </div>

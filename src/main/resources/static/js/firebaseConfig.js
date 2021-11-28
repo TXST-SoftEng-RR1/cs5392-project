@@ -1,8 +1,26 @@
+/**
+ * @author Borislav Sabotinov
+ * This file serves to integrate the application with Google Firebase services,
+ * such as authentication and Firestore database for storing and retrieving models.
+ */
+
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
 import {getAnalytics} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-analytics.js";
-import {addDoc, getDocs, collection, query, where, getFirestore} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js"
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js"
+import {
+    addDoc,
+    collection,
+    getDocs,
+    getFirestore,
+    query,
+    where
+} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js"
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut
+} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -27,7 +45,7 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 jQuery(document).ready(function () {
-    let user;
+    var user;
 
     auth.onAuthStateChanged(function (user) {
         if (user) {
@@ -119,13 +137,14 @@ jQuery(document).ready(function () {
                 });
                 console.log("Model written with ID: ", docRef.id);
             }
+
             saveModel();
         } else {
             alert("You must sign in as a valid user!");
         }
     });
 
-    $("#getModels").click( function () {
+    $("#getModels").click(function () {
         if (user) {
             async function retrieveModels() {
                 const q = query(collection(db, "models"), where("contributorID", "==", user.uid));
@@ -136,6 +155,7 @@ jQuery(document).ready(function () {
                     addRow(doc.id, doc.data());
                 });
             }
+
             retrieveModels();
             $('#existingModelsModal').modal('toggle');
         } else {
@@ -143,11 +163,33 @@ jQuery(document).ready(function () {
         }
     });
 
+    var modelTable = $("#modelDataTbl");
     function addRow(id, data) {
-        let payload =   "<tr>" +
-                            "<td>"+ id +"</td>" +
-                            "<td>"+ JSON.stringify(data) +"</td>" +
-                        "</tr>"
-        $("#modelDataTbl").append(payload);
+        let payload = "<tr>" +
+            "<td style='width: 20%;'>" + id + "</td>" +
+            "<td style='width: 80%;'>" + JSON.stringify(data) + "</td>" +
+            "</tr>"
+        $("#modelDataTbl tbody").append(payload);
     }
+
+    var modelIdVal;
+    modelTable.on('click', 'tr', function () {
+        $(this).addClass('selected').siblings().removeClass('selected');
+        modelIdVal = $(this).find('td:first').html();
+    });
+
+    $("#loadExistingModelBtn").click(function () {
+        async function retrieveModel() {
+            const q = query(collection(db, "models"), where("contributorID", "==", user.uid));
+            q = q.where("")
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                addRow(doc.id, doc.data());
+            });
+        }
+
+        retrieveModel();
+    });
 });
