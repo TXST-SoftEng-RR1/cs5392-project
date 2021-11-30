@@ -8,56 +8,84 @@ package edu.txstate.ctl_parser.util.javacc_parser;
  */
 public interface CTLParserConstants {
 
-  /** End of File. */
-  int EOF = 0;
-  /** RegularExpression Id. */
-  int NOT = 5;
-  /** RegularExpression Id. */
-  int AND = 6;
-  /** RegularExpression Id. */
-  int OR = 7;
-  /** RegularExpression Id. */
-  int THEN = 8;
-  /** RegularExpression Id. */
-  int ALL = 9;
-  /** RegularExpression Id. */
-  int EXISTS = 10;
-  /** RegularExpression Id. */
-  int FUTURE = 11;
-  /** RegularExpression Id. */
-  int GLOBALLY = 12;
-  /** RegularExpression Id. */
-  int NEXT = 13;
-  /** RegularExpression Id. */
-  int UNTIL = 14;
-  /** RegularExpression Id. */
-  int ATOM = 15;
+    /**
+     * End of File.
+     */
+    int EOF = 0;
+    /**
+     * RegularExpression Id.
+     */
+    int NOT = 5;
+    /**
+     * RegularExpression Id.
+     */
+    int AND = 6;
+    /**
+     * RegularExpression Id.
+     */
+    int OR = 7;
+    /**
+     * RegularExpression Id.
+     */
+    int THEN = 8;
+    /**
+     * RegularExpression Id.
+     */
+    int ALL = 9;
+    /**
+     * RegularExpression Id.
+     */
+    int EXISTS = 10;
+    /**
+     * RegularExpression Id.
+     */
+    int FUTURE = 11;
+    /**
+     * RegularExpression Id.
+     */
+    int GLOBALLY = 12;
+    /**
+     * RegularExpression Id.
+     */
+    int NEXT = 13;
+    /**
+     * RegularExpression Id.
+     */
+    int UNTIL = 14;
+    /**
+     * RegularExpression Id.
+     */
+    int ATOM = 15;
 
-  /** Lexical state. */
-  int DEFAULT = 0;
+    /**
+     * Lexical state.
+     */
+    int DEFAULT = 0;
 
-  /** Literal token values. */
-  String[] tokenImage = {
-    "<EOF>",
-    "\" \"",
-    "\"\\r\"",
-    "\"\\t\"",
-    "\"\\n\"",
-    "\"~\"",
-    "\"&\"",
-    "\"|\"",
-    "\"->\"",
-    "\"A\"",
-    "\"E\"",
-    "\"F\"",
-    "\"G\"",
-    "\"X\"",
-    "\"U\"",
-    "<ATOM>",
-    "\"(\"",
-    "\")\"",
-    "\"[\"",
-    "\"]\"",
-  };
+    /**
+     * Literal token values.
+     */
+    String[] tokenImage = {
+            "<EOF>",
+            "\" \"",
+            "\"\\r\"",
+            "\"\\t\"",
+            "\"\\n\"",
+            "\"~\"",
+            "\"&\"",
+            "\"|\"",
+            "\"->\"",
+            "\"A\"",
+            "\"E\"",
+            "\"F\"",
+            "\"G\"",
+            "\"X\"",
+            "\"U\"",
+            "<ATOM>",
+            "\"(\"",
+            "\")\"",
+            "\"[\"",
+            "\"]\"",
+    };
 
 }

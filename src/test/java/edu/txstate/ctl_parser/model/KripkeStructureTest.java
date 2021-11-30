@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2021 borislavsabotinov.com
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package edu.txstate.ctl_parser.model;
 
 import com.google.gson.JsonObject;
@@ -6,7 +22,6 @@ import edu.txstate.ctl_parser.util.KripkeModelParser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -22,7 +37,8 @@ class KripkeStructureTest {
             "\t\t\"atoms\": [{\"s1\": [\"p\",\"q\"]}, {\"s2\": [\"q\",\"t\",\"r\"]}, {\"s3\": []}, {\"s4\": [\"t\"]}]\n" +
             "\t}\n" +
             "}";
-    JsonObject modelObj = JsonParser.parseString(model).getAsJsonObject();;
+    JsonObject modelObj = JsonParser.parseString(model).getAsJsonObject();
+    ;
 
     @BeforeEach
     void setUp() {
@@ -96,18 +112,17 @@ class KripkeStructureTest {
     }
 
 
-
     /**
      * This test is about ensuring we prevent this error from occurring:
      * ERROR: Second call to constructor of static parser.
-     *     You must either use ReInit() or set the JavaCC option STATIC to false
-     *     during parser generation.
-     *
+     * You must either use ReInit() or set the JavaCC option STATIC to false
+     * during parser generation.
+     * <p>
      * KripkeStructure's verifyFormula() method was adjusted to ensure ReInit()
      * is called by checking if isJj_initialized_once() returns true. The latter
      * is a new getter introduced in CTLParser to access the state of the jj_initialized_once
      * boolean variable.
-     *
+     * <p>
      * This approach allows us to use a single parser, keep static = true in the OPTIONS, and
      * utilize the parser via successive calls. Note that we need to clear the InputStream.
      */
@@ -125,7 +140,7 @@ class KripkeStructureTest {
     @Test
     void model1_test72_true() {
         KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-        String formula = "EX(AFp|EFr)";
+        String formula = "EX(AFp | EFr)";
         String state = "s4";
         InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
         assertTrue(kripkeStructure.validateFormula(formulaStream, state));
@@ -188,13 +203,12 @@ class KripkeStructureTest {
         assertFalse(kripkeStructure.validateFormula(formulaStream, state));
     }
 
-//    @Test
-//    void model1_complexUntil_true() {
-//        KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-//        // A[p U q]
-//        String formula = "A[p U A[q U r]]";
-//        String state = "s2";
-//        InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
-//        assertTrue(kripkeStructure.validateFormula(formulaStream, state));
-//    }
+    @Test
+    void model1_complexUntil_true() {
+        KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
+        String formula = "E[A[q U r] U t]";
+        String state = "s2";
+        InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
+        assertTrue(kripkeStructure.validateFormula(formulaStream, state));
+    }
 }

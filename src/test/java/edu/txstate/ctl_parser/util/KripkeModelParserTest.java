@@ -1,14 +1,26 @@
+/*
+ * Copyright (c) 2021 borislavsabotinov.com
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package edu.txstate.ctl_parser.util;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import edu.txstate.ctl_parser.model.KripkeStructure;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +33,7 @@ class KripkeModelParserTest {
             "\t\t\"atoms\": [{\"s1\": [\"p\",\"q\"]}, {\"s2\": [\"q\",\"t\",\"r\"]}, {\"s3\": []}, {\"s4\": [\"t\"]}]\n" +
             "\t}\n" +
             "}";
-    JsonObject modelObj = JsonParser.parseString(model).getAsJsonObject();;
+    JsonObject modelObj = JsonParser.parseString(model).getAsJsonObject();
 
     @BeforeEach
     void setUp() {
@@ -37,6 +49,4 @@ class KripkeModelParserTest {
         kripkeModelParser.loadModel(modelObj);
         assertTrue(kripkeModelParser.getKripkeStructure().toString().contains("qtr"));
     }
-
-
 }

@@ -163,6 +163,7 @@ jQuery(document).ready(function () {
     });
 
     var modelTable = $("#modelDataTbl");
+
     function addRow(id, data) {
         let payload = "<tr>" +
             "<td style='width: 20%;'>" + id + "</td>" +
@@ -191,8 +192,7 @@ jQuery(document).ready(function () {
             drawModel(json);
             enableFields();
             populateStateSelector(json);
-        }
-        else
+        } else
             alert("Please select an existing model from the table!");
     });
 });

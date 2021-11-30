@@ -34,10 +34,9 @@ td {
     color: white;
 }
 
-#watermark
-{
-    position:fixed;
-    opacity:0.2;
+#watermark {
+    position: fixed;
+    opacity: 0.2;
     color: white;
     height: 400px;
     bottom: 72px;
@@ -46,7 +45,8 @@ td {
 }
 
 #ftr {
-    position: absolute;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     height: 60px;
 }
@@ -55,7 +55,7 @@ td {
     margin-left: 10px;
 }
 
-.errorMsg{
+.errorMsg {
     color: red;
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020. SimplyATX.com
+ * Copyright (c) 2021 borislavsabotinov.com
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -33,6 +33,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SwaggerConfig {
     /**
      * Returns a Docket - A builder which is intended to be the primary interface into the swagger-springmvc framework.
+     *
      * @return Docket
      */
     @Bean
@@ -46,7 +47,6 @@ public class SwaggerConfig {
     }
 
     /**
-     *
      * @return ApiInfo object initialized with information about our API
      */
     private ApiInfo apiEndPointsInfo() {

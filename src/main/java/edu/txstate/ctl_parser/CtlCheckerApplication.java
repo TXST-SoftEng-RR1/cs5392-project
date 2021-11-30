@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020. SimplyATX.com
+ * Copyright (c) 2021 borislavsabotinov.com
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -28,6 +28,7 @@ public class CtlCheckerApplication {
     /**
      * Launches SpringBoot application, which listens on port 8080
      * {@code localhost:8080}
+     *
      * @param args command line arguments
      */
     public static void main(String[] args) {
