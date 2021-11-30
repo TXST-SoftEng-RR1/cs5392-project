@@ -75,6 +75,8 @@ jQuery(document).ready(function () {
         readFileContent(file).then(content => {
             // try to parse as JSON to force an error if it is not valid
             let json = $.parseJSON(content);
+
+            // check for atoms
             if (!json["kripke-model"].hasOwnProperty('atoms')) {
                 alert("Kripke model must contain atoms property.")
                 return {
@@ -82,6 +84,19 @@ jQuery(document).ready(function () {
                     message: "Kripke model must contain atoms property."
                 }
             }
+
+            // check for proper transitions
+            let transitions = json["kripke-model"].transitions;
+            for (let i in transitions) {
+                if (transitions[i] !== null && !transitions[i].includes(",")) {
+                    alert("Kripke model must contain proper transitions: \"FROM_STATE,TO_STATE\"")
+                    return {
+                        error: true,
+                        message: "Kripke model must contain proper transitions: \"FROM_STATE,TO_STATE\""
+                    }
+                }
+            }
+
             console.log("updating textbox...");
             target.val(content);
             console.log("drawing model...");
