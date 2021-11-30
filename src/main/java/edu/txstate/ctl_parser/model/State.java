@@ -3,6 +3,7 @@ package edu.txstate.ctl_parser.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class State {
     // final member variables as we do not want to re-bind them
@@ -11,6 +12,7 @@ public class State {
     private final Set<Atom> atoms;
     private final ArrayList<State> transitions;
     private final ArrayList<String> marks;
+    private final Logger logger = Logger.getLogger(State.class.getName());
 
     public State(String n) {
         name = n;
@@ -45,7 +47,10 @@ public class State {
     }
 
     public void addTransition(State s) {
-        transitions.add(s);
+        if (!transitions.contains(s))
+            transitions.add(s);
+        else
+            logger.warning("Warning: Attempting to add an existing transition; ignoring! ");
     }
 
     public void addAtom(char atomName) {

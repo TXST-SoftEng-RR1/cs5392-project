@@ -1,4 +1,4 @@
-﻿{
+{
   "kripke-model": {
     "states": [
       "s1",
@@ -7,7 +7,7 @@
       "s4"
     ],
     "transitions": [
-      "s1,s2",
+      "s1,s8",
       "s1,s3",
       "s3,s4",
       "s4,s2",

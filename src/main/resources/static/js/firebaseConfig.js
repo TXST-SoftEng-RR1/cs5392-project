@@ -106,7 +106,6 @@ jQuery(document).ready(function () {
     });
 
     $("#signOutBtn").click(function () {
-        console.log("SEEE MEEEEE")
         signOut(auth).then(() => {
             // Sign-out successful.
             console.log("sign out successful");
@@ -172,24 +171,28 @@ jQuery(document).ready(function () {
         $("#modelDataTbl tbody").append(payload);
     }
 
-    var modelIdVal;
+    var modelIdVal, modelVal;
     modelTable.on('click', 'tr', function () {
         $(this).addClass('selected').siblings().removeClass('selected');
         modelIdVal = $(this).find('td:first').html();
+        modelVal = $(this).find('td:nth-child(2)').html();
+        modelVal = JSON.parse(modelVal).modelDef;
     });
 
     $("#loadExistingModelBtn").click(function () {
-        async function retrieveModel() {
-            const q = query(collection(db, "models"), where("contributorID", "==", user.uid));
-            q = q.where("")
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data());
-                addRow(doc.id, doc.data());
-            });
-        }
+        if (modelIdVal) {
+            console.log("Loading model with ID " + modelIdVal);
+            console.log("updating textbox...");
 
-        retrieveModel();
+            $("#content-target").val(modelVal);
+            let json = $.parseJSON(modelVal);
+
+            console.log("drawing model...");
+            drawModel(json);
+            enableFields();
+            populateStateSelector(json);
+        }
+        else
+            alert("Please select an existing model from the table!");
     });
 });

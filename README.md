@@ -50,7 +50,7 @@ After building the app
    The application should start
 3. Navigate to localhost:8080/hello in a browser to test. 
 
-You should see "CS5392 CTL Checker App says hello!World!"
+You should see "CS5392 CTL Checker App says Hello World!"
 
 ## Viewing the API documentation
 To view the available API endpoints and details about them:
@@ -59,7 +59,7 @@ Ensure the project is running.
 Navigate to: http://localhost:8080/swagger-ui/index.html
 
 ## Deploy the service to GCP
-Note: cannot push image to root level. 
+Note: cannot push image to root level `gcr.io/ctl-checker` directly.
 
 Build Docker image: `gcloud builds submit --tag gcr.io/ctl-checker/ctl-checker`   
 - First time around, may receive prompt to enable cloudbuilds for the project
@@ -71,9 +71,14 @@ Deploy the image: `gcloud beta run deploy --image gcr.io/ctl-checker/ctl-checker
 
 ## Class Diagram
 
-![](src/main/resources/static/img/LibraryUML.png)
+A clean overview of the classes with basic inheritance: 
+![Simple CTL UML Diagram](src/main/resources/static/img/CTLSimpleUML.png)
+
+A full class diagram: 
+![Full CTL UML Diagram](src/main/resources/static/img/CTLCheckerUML.png)
 
 ##Guides
+
 The following guides illustrate how to use some features concretely:
 
 [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)    

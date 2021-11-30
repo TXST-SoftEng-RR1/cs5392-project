@@ -41,7 +41,7 @@ public class CtlCheckerController {
 
     @GetMapping("/hello")
     String hello() {
-        return "CS5392 CTL Checker App says hello!" + message + "!";
+        return "CS5392 CTL Checker App says Hello " + message + "!";
     }
 
     /**
