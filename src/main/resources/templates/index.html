@@ -173,6 +173,15 @@
                     <br/>
                     The Kripke model should be defined using JSON format. Below is an example.
                     <img src="img/KripkeJSONDefinition.png" alt="Example of a Kripke structure defined in JSON.">
+                    <br/>
+                    <div>
+                        <ul>
+                            <li>Duplicate atom definitions for a state will be ignored/removed.</li>
+                            <li>Empty transition slots (empty string) will be ignored.</li>
+                            <li>Duplicate transitions will be ignored, a warning will be issued on the server.</li>
+                            <li>An error will be triggered if: no atoms are defined or transition does not have a from and to states.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -161,7 +161,6 @@ class KripkeStructureTest {
     @Test
     void model1_complexTest_true() {
         KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-        // A[p U q]
         String formula = "A[p U (A[q U r] -> r)]";
         String state = "s2";
         InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
@@ -171,7 +170,6 @@ class KripkeStructureTest {
     @Test
     void model1_complexTest_false() {
         KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-        // A[p U q]
         String formula = "A[p U (A[q U r] -> p)]";
         String state = "s2";
         InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
@@ -184,12 +182,19 @@ class KripkeStructureTest {
     @Test
     void model1_customUntil_true() {
         KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
-        // A[p U q]
         String formula = "A[p U r]";
         String state = "s2";
         InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
         assertFalse(kripkeStructure.validateFormula(formulaStream, state));
     }
 
-
+//    @Test
+//    void model1_complexUntil_true() {
+//        KripkeStructure kripkeStructure = kripkeModelParser.loadModel(modelObj);
+//        // A[p U q]
+//        String formula = "A[p U A[q U r]]";
+//        String state = "s2";
+//        InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
+//        assertTrue(kripkeStructure.validateFormula(formulaStream, state));
+//    }
 }

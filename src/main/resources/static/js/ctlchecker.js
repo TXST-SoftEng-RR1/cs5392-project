@@ -187,6 +187,9 @@ function drawModel(json) {
 
         }
         console.log("State: " + state + "; atoms: " + stateAtoms);
+        console.log("Removing duplicate atoms...");
+        stateAtoms = Array.from(new Set(stateAtoms.split(','))).toString();
+
         xOffset = (x + 1) * 65;
         yOffset = (x + 1) * 65;
         stateMap.set(state, [xOffset, yOffset]);
@@ -306,7 +309,7 @@ function populateStateSelector(json) {
 }
 
 function removeOptions() {
-    if( stateSelector.has('option').length > 0)
+    if (stateSelector.has('option').length > 0)
         stateSelector.empty();
     else
         console.log("Select has no options to remove.");
