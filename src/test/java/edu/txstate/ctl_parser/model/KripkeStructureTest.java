@@ -30,15 +30,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class KripkeStructureTest {
 
     KripkeModelParser kripkeModelParser;
-    String model = "{\n" +
+    String model1 = "{\n" +
             "\t\"kripke-model\": {\n" +
             "\t\t\"states\": [\"s1\", \"s2\", \"s3\", \"s4\"],\n" +
             "\t\t\"transitions\": [\"s1,s2\", \"s1,s3\", \"s3,s4\", \"s4,s2\", \"s2,s3\"],\n" +
             "\t\t\"atoms\": [{\"s1\": [\"p\",\"q\"]}, {\"s2\": [\"q\",\"t\",\"r\"]}, {\"s3\": []}, {\"s4\": [\"t\"]}]\n" +
             "\t}\n" +
             "}";
-    JsonObject modelObj = JsonParser.parseString(model).getAsJsonObject();
-    ;
+    JsonObject modelObj = JsonParser.parseString(model1).getAsJsonObject();
 
     @BeforeEach
     void setUp() {
