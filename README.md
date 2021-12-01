@@ -77,6 +77,11 @@ A clean overview of the classes with basic inheritance:
 A full class diagram: 
 ![Full CTL UML Diagram](src/main/resources/static/img/CTLCheckerUML.png)
 
+## Test Cases
+
+Test cases are available under:   
+ `src/main/java/resources/static/docs`
+
 ## Screenshots 
 
 Screenshot captures of the program may be found under:    
