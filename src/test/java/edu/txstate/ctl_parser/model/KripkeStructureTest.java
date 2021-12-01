@@ -191,7 +191,7 @@ class KripkeStructureTest {
     }
 
     /**
-     * equivalent to test 74 A[pUA[qUr]] but simplified
+     * equivalent to test 74 A[p U A[q U r]] but simplified as A[qUr] evaluates to true
      */
     @Test
     void model1_customUntil_true() {
