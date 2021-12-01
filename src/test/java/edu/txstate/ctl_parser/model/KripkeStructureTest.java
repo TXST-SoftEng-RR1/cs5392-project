@@ -191,7 +191,7 @@ class KripkeStructureTest {
     }
 
     /**
-     * equivalent to test 74 A[pUA[qUr]] but simplified
+     * equivalent to test 74 A[p U A[q U r]] but simplified as A[qUr] evaluates to true
      */
     @Test
     void model1_customUntil_true() {
@@ -199,7 +199,7 @@ class KripkeStructureTest {
         String formula = "A[p U r]";
         String state = "s2";
         InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
-        assertFalse(kripkeStructure.validateFormula(formulaStream, state));
+        assertTrue(kripkeStructure.validateFormula(formulaStream, state));
     }
 
     @Test
