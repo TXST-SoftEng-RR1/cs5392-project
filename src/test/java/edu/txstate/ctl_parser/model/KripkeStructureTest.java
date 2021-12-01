@@ -199,7 +199,7 @@ class KripkeStructureTest {
         String formula = "A[p U r]";
         String state = "s2";
         InputStream formulaStream = new ByteArrayInputStream(formula.getBytes());
-        assertFalse(kripkeStructure.validateFormula(formulaStream, state));
+        assertTrue(kripkeStructure.validateFormula(formulaStream, state));
     }
 
     @Test
