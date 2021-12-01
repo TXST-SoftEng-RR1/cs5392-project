@@ -19,6 +19,27 @@
             <img src="img/favicon.png" width="32" height="32" class="d-inline-block align-top" alt="">
             <h3 style="float: right;"> CS5392 Computational Tree Logic (CTL) Checker</h3>
         </a>
+        <ul class="navbar-nav ml-auto">
+            <!-- for new or existing users -->
+            <li id="userLogInNavItem" class="nav-item" style="margin-right: 40px;">
+                <a id="signInBtn" class="nav-link">Sign Up / Log-in</a>
+            </li>
+
+
+            <!-- will replace the sign up and log in buttons once user logs in -->
+            <li id="userAccountNavItem" class="nav-item dropdown hidden" style="padding-left: 5px; margin-right: 50px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <img id="myAcctImgPreview" src="" alt="User profile picture.">
+                    Account
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
+                    <div> &nbsp;Signed in as: <i id="userNameForNav"></i></div>
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#accountModal">My Profile</a>
+                    <a class="dropdown-item" href="#" id="signOutBtn">Sign out</a>
+                </div>
+            </li>
+        </ul>
     </nav>
 
     <div class="alert alert-secondary" role="alert" style="border-radius: 0;">
@@ -32,44 +53,75 @@
     <hr/>
 
     <a href="/swagger-ui/index.html" target="_blank" class="badge badge-pill badge-info">
-        Swagger UI
+        Swagger API doc
     </a>
     <a href="https://github.com/TXST-SoftEng-RR1/cs5392-project" target="_blank" class="badge badge-pill badge-info">
         Source Code
     </a>
-
-    <a href="" class="badge badge-pill badge-info" data-bs-toggle="modal" data-bs-target="#usageInstructionsModal">
+    <a class="badge badge-pill badge-info" data-bs-toggle="modal" data-bs-target="#usageInstructionsModal">
         Usage Instructions
     </a>
-
+    <a id="getModels" class="badge badge-pill badge-info hidden">
+        Access Stored Models
+    </a>
 
     <div class="container">
         <br/>
         <div class="row">
-            <div class="col-sm" style="overflow-y: scroll; height: 400px;">
-                <label for="ctlModelFile" class="textColor">Load JSON Model: &nbsp; </label>
-                <input id="ctlModelFile" type="file" class="textColor" />
-                <hr style="color: lightgray"/>
-                <label for="content-target" class="textColor">Raw Model Definition: </label>
-                <textarea id="content-target" style="margin-top: 10px;" disabled></textarea>
-                <button id="submitModel" type="button" class="btn-primary">Submit</button>
+            <label for="ctlModelFile" class="textColor">Load JSON Model: &nbsp; </label>
+            <input id="ctlModelFile" type="file" class="textColor" />
+            <br/>
+            <br/>
+            <div class="col-7">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#nav-home" role="tab"
+                           aria-controls="nav-home"
+                           aria-selected="true">
+                            CTL JSON
+                        </a>
+                        <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                           href="#nav-profile" role="tab"
+                           aria-controls="nav-profile"
+                           aria-selected="false">
+                            CTL Graph
+                        </a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                        style="padding: 5px;">
+                        <label for="content-target" class="textColor">Raw Model Definition: </label>
+                        <textarea id="content-target" style="margin-top: 10px;" disabled></textarea>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
+                        style="overflow: scroll; height: 480px; padding: 5px;">
+                        <div class="textColor">CTL Model Representation: </div>
+                        <canvas id="ctlModelCanvas" width="1000" height="1000"></canvas>
+                    </div>
+                </div>
                 <br/>
-                <br/>
-                <div class="textColor">CTL Model Representation: </div>
-                <canvas id="ctlModelCanvas" style="width: 100%;" height="400"></canvas>
+<!--                <button id="submitModel" type="button" class="btn-primary">Submit</button>-->
             </div>
-            <div class="col-sm">
-                <label for="formulaInput" class="textColor">CTL Forumula: &nbsp; </label>
-                <input id="formulaInput" type="text" name="formulaInput" disabled/>
-                <span class="errorMsg hidden textColor">Please Enter a Valid CTL Formula (refer to Usage Inst. for details)</span>
-            </div>
-            <div class="col-sm">
-                <select id="stateSelector" class="form-select" aria-label="Select a state to evaluate." disabled>
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+            <div class="col" style="margin-left: 20px;">
+                <div class="textColor">Select state: </div>
+                <select id="stateSelector" class="form-select-sm" aria-label="Select a state to evaluate."
+                        disabled style="width: 30%; float: left;">
                 </select>
+                <input id="formulaInput" type="text" name="formulaInput"
+                       disabled style="margin-left: 10px;" placeholder="Enter CTL formula"/>
+                <br/>
+                <span class="errorMsg hidden textColor">
+                    Enter valid CTL Formula (refer to Usage Inst)
+                </span>
+                <br/>
+                <button id="submitFormula" type="button" class="btn-primary">Verify Formula</button>
+                <button id="saveModel" type="button" class="btn-secondary">Save Model</button>
+                <hr style="color: lightgray;"/>
+                <label for="validationResultsArea" class="textColor">Validation Results: </label>
+                <br/>
+                <textarea id="validationResultsArea" disabled></textarea>
             </div>
         </div>
     </div>
@@ -90,7 +142,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title" id="invalidModelModalTitle">Invalid File Upload: </h5>
-                    <button id="closeInvalidModelModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button id="closeInvalidModelModal" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -107,7 +159,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-info">
                     <h5 class="modal-title" id="usageInstructionsModalTitle">How to use this program: </h5>
-                    <button id="closeUsageInstructionsModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button id="closeUsageInstructionsModal" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -121,6 +173,89 @@
                     <br/>
                     The Kripke model should be defined using JSON format. Below is an example.
                     <img src="img/KripkeJSONDefinition.png" alt="Example of a Kripke structure defined in JSON.">
+                    <br/>
+                    <div>
+                        <ul>
+                            <li>Duplicate atom definitions for a state will be ignored/removed.</li>
+                            <li>Empty transition slots (empty string) will be ignored.</li>
+                            <li>Duplicate transitions will be ignored, a warning will be issued on the server.</li>
+                            <li>An error will be triggered if: no atoms are defined or transition does not have a from and to states.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Modal -->
+    <div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="accountModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accountModalLabel">Your Profile</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="media">
+                            <div style="filter: sepia(50%);">
+                                <img id="userProfilePic" class="align-self-start mr-3" src="" alt="User profile picture."
+                                     style="border-radius: 8px; filter: drop-shadow(8px 8px 10px #955c28);">
+                            </div>
+                            <div class="media-body">
+                                <h5 id="userName" class="mt-0">Top-aligned media</h5>
+                                <hr/>
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="userEmail" class="col-sm-2 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" readonly class="form-control-plaintext" id="userEmail">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="userEmailVerified" class="col-sm-2 col-form-label">Verified</label>
+                                        <div class="col-sm-2">
+                                            <input type="checkbox" disabled class="form-control" id="userEmailVerified">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Account Modal -->
+
+    <!-- Model Data Modal -->
+    <div class="modal fade" id="existingModelsModal" tabindex="-1" role="dialog" aria-labelledby="invalidModelModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-gold">
+                    <h5 class="modal-title" id="existingModelsModalTitle">Existing Model Definitions: </h5>
+                    <button id="closeExistingModelsModal" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="overflow-y: scroll; height: 350px;">
+                        <table id="modelDataTbl">
+                            <thead>
+                                <tr>
+                                    <th>Model ID</th>
+                                    <th>Model Definition (JSON)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <button id="loadExistingModelBtn" type="button" class="btn btn-primary">
+                        Load Model
+                    </button>
                 </div>
             </div>
         </div>
@@ -129,5 +264,6 @@
     <script th:src="@{/webjars/jquery/3.6.0/jquery.js}" type="application/javascript"></script>
     <script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.js}" type="application/javascript"></script>
     <script src="js/ctlchecker.js" type="application/javascript" defer></script>
+    <script src="js/firebaseConfig.js" type="module" defer></script>
 </body>
 </html>

@@ -1,10 +1,29 @@
 body {
-    background-color: #501214 !important;
+    background-color: #501214;
 }
 
-textarea {
+a {
+    cursor: pointer;
+}
+
+table {
+    width: 98%;
+}
+
+td {
+    border: 2px #DDD double;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#content-target {
     width: 100%;
-    height: 150px;
+    height: 480px;
+}
+
+#validationResultsArea {
+    width: 100%;
+    height: 100px;
 }
 
 .badge {
@@ -15,19 +34,18 @@ textarea {
     color: white;
 }
 
-#watermark
-{
-    position:fixed;
-    opacity:0.2;
-    color:white;
+#watermark {
+    position: fixed;
+    opacity: 0.2;
+    color: white;
     height: 400px;
     bottom: 72px;
     left: 400px;
+    z-index: -1;
 }
 
 #ftr {
-    position: absolute;
-
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 60px;
@@ -37,12 +55,13 @@ textarea {
     margin-left: 10px;
 }
 
-.errorMsg{
+.errorMsg {
     color: red;
 }
 
 .hidden {
     visibility: hidden;
+    display: none;
 }
 
 #stateSelector:disabled {
@@ -51,4 +70,9 @@ textarea {
 
 #formulaInput:disabled {
     cursor: not-allowed;
+}
+
+.selected {
+    background-color: #055160;
+    color: white;
 }

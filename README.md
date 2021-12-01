@@ -50,7 +50,7 @@ After building the app
    The application should start
 3. Navigate to localhost:8080/hello in a browser to test. 
 
-You should see "CS5392 CTL Checker App says hello!World!"
+You should see "CS5392 CTL Checker App says Hello World!"
 
 ## Viewing the API documentation
 To view the available API endpoints and details about them:
@@ -59,21 +59,36 @@ Ensure the project is running.
 Navigate to: http://localhost:8080/swagger-ui/index.html
 
 ## Deploy the service to GCP
-Note: cannot push image to root level. 
+Note: cannot push image to root level `gcr.io/ctl-checker` directly.
 
 Build Docker image: `gcloud builds submit --tag gcr.io/ctl-checker/ctl-checker`   
 - First time around, may receive prompt to enable cloudbuilds for the project
 Deploy the image: `gcloud beta run deploy --image gcr.io/ctl-checker/ctl-checker`    
 - First time around, may receive prompt to enable run for the project
   - Select [1] Cloud Run (fully managed) for the target platform
-  - Select [22] us-central1 for the region
+  - Select [23] us-central1 for the region
   - Press Enter to select the default for service name (movies)
 
 ## Class Diagram
 
-![](src/main/resources/static/img/LibraryUML.png)
+A clean overview of the classes with basic inheritance: 
+![Simple CTL UML Diagram](src/main/resources/static/img/CTLSimpleUML.png)
+
+A full class diagram: 
+![Full CTL UML Diagram](src/main/resources/static/img/CTLCheckerUML.png)
+
+## Test Cases
+
+Test cases are available under:   
+ `src/main/java/resources/static/docs`
+
+## Screenshots 
+
+Screenshot captures of the program may be found under:    
+ `src/main/java/resources/static/img/screenshots`
 
 ##Guides
+
 The following guides illustrate how to use some features concretely:
 
 [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)    
@@ -81,6 +96,7 @@ The following guides illustrate how to use some features concretely:
 [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)    
 [JJTree Reference](https://www.cs.purdue.edu/homes/hosking/javacc/doc/JJTree.html)
 [JavaCC Reference](https://javacc.github.io/javacc/tutorials/examples.html#javacc-instructions)
+[Spring REST Variables](https://stackoverflow.com/questions/55949044/global-variables-in-controller-class-are-overridden-with-latest-session-opened)
 
 ## Notes
 

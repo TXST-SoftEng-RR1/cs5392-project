@@ -1,8 +1,25 @@
+/*
+ * Copyright (c) 2021 borislavsabotinov.com
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package edu.txstate.ctl_parser.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class State {
     // final member variables as we do not want to re-bind them
@@ -11,6 +28,7 @@ public class State {
     private final Set<Atom> atoms;
     private final ArrayList<State> transitions;
     private final ArrayList<String> marks;
+    private final Logger logger = Logger.getLogger(State.class.getName());
 
     public State(String n) {
         name = n;
@@ -37,11 +55,6 @@ public class State {
     }
 
     public ArrayList<State> getTransitions() {
-//        State[] result = new State[transitions.size()];
-//        for (int i = 0; i < transitions.size(); i++) {
-//            result[i] = transitions.get(i);
-//        }
-//        return result;
         return transitions;
     }
 
@@ -50,7 +63,10 @@ public class State {
     }
 
     public void addTransition(State s) {
-        transitions.add(s);
+        if (!transitions.contains(s))
+            transitions.add(s);
+        else
+            logger.warning("Warning: Attempting to add an existing transition; ignoring! ");
     }
 
     public void addAtom(char atomName) {
@@ -59,7 +75,11 @@ public class State {
     }
 
     public boolean hasAtom(String atom) {
-        return atoms.contains(atom);
+        for (Atom tmpAtom : atoms) {
+            if (tmpAtom.getName() == atom.charAt(0))
+                return true;
+        }
+        return false;
     }
 
     public void mark(String mark) {

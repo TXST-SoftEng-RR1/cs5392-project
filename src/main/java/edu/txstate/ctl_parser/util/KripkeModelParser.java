@@ -1,8 +1,23 @@
+/*
+ * Copyright (c) 2021 borislavsabotinov.com
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package edu.txstate.ctl_parser.util;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import edu.txstate.ctl_parser.model.KripkeStructure;
 import edu.txstate.ctl_parser.model.State;
@@ -18,20 +33,20 @@ import java.util.logging.Logger;
  */
 public class KripkeModelParser {
     private static final Logger logger = Logger.getLogger(KripkeModelParser.class.getName());
-    private JsonObject kripkeJsonObj;
-    private KripkeStructure kripkeStructure;
     private static final int FROM_STATE_IDX = 0;
     private static final int TO_STATE_IDX = 1;
 
+    private JsonObject kripkeJsonObj;
+    private KripkeStructure kripkeStructure;
 
     public KripkeModelParser() {
         kripkeJsonObj = new JsonObject();
-        kripkeStructure = null;
+        kripkeStructure = new KripkeStructure();
     }
 
-    public void loadModel(String model) {
+    public KripkeStructure loadModel(JsonObject model) {
         try {
-            kripkeJsonObj = JsonParser.parseString(model).getAsJsonObject();
+            kripkeJsonObj = model;
             loadStates();
             loadAtoms();
             loadTransitions();
@@ -39,12 +54,12 @@ public class KripkeModelParser {
             logger.warning(e.getMessage());
             e.printStackTrace();
         }
+        return kripkeStructure;
     }
 
     private void loadStates() {
         JsonArray states = kripkeJsonObj.getAsJsonObject("kripke-model")
                 .getAsJsonArray("states");
-        kripkeStructure = new KripkeStructure();
 
         for (int i = 0; i < states.size(); i++) {
             State state = new State(states.get(i).getAsString());
@@ -64,7 +79,6 @@ public class KripkeModelParser {
                 for (int j = 0; j < atomsForSpecificState.size(); j++) {
                     tmpState.addAtom(atomsForSpecificState.get(j).getAsString().charAt(0));
                 }
-
             }
         }
     }
