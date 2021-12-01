@@ -2,13 +2,16 @@
 
 Authors: Borislav Sabotinov, Sivaranjani Ravichandran, Sneha Sirnam, Sriram Putta    
 - Source Code: https://github.com/TXST-SoftEng-RR1/cs5392-project
-- Website: https://ctl-checker-pprkprkh4a-uc.a.run.app/
+- Website: https://ctl.borislavsabotinov.com/   
+(resolves to https://ctl-checker-pprkprkh4a-uc.a.run.app/ via port forwarding) 
 
 ## Pre-requisites and Dependencies
 
-- Apache Maven: https://maven.apache.org/     
-- Node.js and NPM: https://nodejs.org/en/    
+- Apache Maven: https://maven.apache.org/         
 - JavCC: https://javacc.github.io/javacc/
+
+Recommended:    
+- Node.js and NPM: https://nodejs.org/en/
 
 ## Working with Git
 
@@ -41,6 +44,9 @@ To build the application manually:
 
 You should see "BUILD SUCCESS" on the terminal and a `target` directory should be created under root.
 
+The application may also be built via "GitHub Java Continuous Integration with Maven" 
+![Build automation](src/main/resources/static/img/screenshots/automatedBuildVerification.png)
+
 ## Run the app
 
 After building the app 
@@ -52,6 +58,9 @@ After building the app
 
 You should see "CS5392 CTL Checker App says Hello World!"
 
+The application may also be built and ran from inside an IDE, 
+to take advantage of debugging capabilities. 
+
 ## Viewing the API documentation
 To view the available API endpoints and details about them:
 
@@ -59,7 +68,9 @@ Ensure the project is running.
 Navigate to: http://localhost:8080/swagger-ui/index.html
 
 ## Deploy the service to GCP
-Note: cannot push image to root level `gcr.io/ctl-checker` directly.
+
+The application is deployed to Google Cloud Platform and integrated with 
+Google Firebase. 
 
 Build Docker image: `gcloud builds submit --tag gcr.io/ctl-checker/ctl-checker`   
 - First time around, may receive prompt to enable cloudbuilds for the project
@@ -69,8 +80,10 @@ Deploy the image: `gcloud beta run deploy --image gcr.io/ctl-checker/ctl-checker
   - Select [23] us-central1 for the region
   - Press Enter to select the default for service name (movies)
 
-## Class Diagram
+Note: cannot push image to root level `gcr.io/ctl-checker` directly.
 
+## Class Diagram
+Please zoom in to see details as needed. 
 A clean overview of the classes with basic inheritance: 
 ![Simple CTL UML Diagram](src/main/resources/static/img/CTLSimpleUML.png)
 
@@ -84,12 +97,12 @@ Test cases are available under:
 
 ## Screenshots 
 
-Screenshot captures of the program may be found under:    
+Screenshot captures of the program are available under:    
  `src/main/java/resources/static/img/screenshots`
 
 ##Guides
 
-The following guides illustrate how to use some features concretely:
+The following guides illustrate how to use some tools and libraries concretely:
 
 [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)    
 [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)    
@@ -104,5 +117,6 @@ The following guides illustrate how to use some features concretely:
 This exception occurs if you do not make the Logger object private static and final.  
 
 ##References
-
-https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson
+[1] https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson    
+[2] Michael Huth and Mark Ryan. 2004. Logic in Computer Science: Modelling and Reasoning about Systems. 
+Cambridge University Press, USA.
