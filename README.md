@@ -54,9 +54,11 @@ After building the app
 1. `cd target`
 2. `java -jar ctl-checker-0.0.1-SNAPSHOT.jar`
    The application should start
-3. Navigate to localhost:8080/hello in a browser to test. 
+3. Navigate to `localhost:8080/hello` in a browser to test. 
 
 You should see "CS5392 CTL Checker App says Hello World!"
+
+Navigate to `localhost:8080` to see the main page. 
 
 The application may also be built and ran from inside an IDE, 
 to take advantage of debugging capabilities. 
